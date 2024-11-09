@@ -1,12 +1,11 @@
 import './index.css'
-import Test from './../Containers/Test'
+import H1 from './../Components/H1'
 
 function App() {
 	return (
-		<main className='bg-white'>
-			<h1 className='w-[12px]'>бобрик</h1>
-			<Test />
-		</main>
+		<div className='bg-white'>
+			<H1>Зажми для старта!</H1>
+		</div>
 	)
 }
 

@@ -21,9 +21,10 @@ function App() {
 	const stopTimer = () => {
 		clearInterval(intervalId)
 		setIsPressed(false)
-		setCount((prev) => prev + 1) 
+		if (currentCount <= 14) {
+			setCount((prev) => prev + 1) // Если условие выполняется, увеличиваем currentCount
+		}
 	}
-
 	// Обработчики событий для мыши
 	const handleMouseDown = () => {
 		setIsPressed(true)
@@ -35,6 +36,7 @@ function App() {
 			stopTimer()
 		}
 		setPressDuration(0)
+		/* ? currentCount >=15  */
 	}
 
 	const handleMouseLeave = () => {
@@ -52,7 +54,7 @@ function App() {
 	return (
 		<div className='bg-white flex flex-col justify-center items-center gap-[10%] h-[100vh]'>
 			{/* Передаем currentCount в компонент RepCount */}
-			<RepCount>{currentCount}</RepCount>
+			<RepCount currentCount={currentCount} setCount={setCount}>{currentCount}</RepCount>
 			<H1>Зажми для старта!</H1>
 			{/* Передаем обработчики в KegelsButton */}
 			<KegelsButton

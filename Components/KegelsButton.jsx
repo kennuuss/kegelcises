@@ -27,7 +27,7 @@ function KegelsButton(props) {
 			className='w-[244px] h-[244px]'
 		>
 			<div
-				className={`bg-[#9B69FF] transform transition-all duration-100 ease-in mx-auto rounded-full w-[244px] h-[244px] 
+				className={`bg-[#9B69FF] transform transition-all duration-100 ease-in mx-auto rounded-full w-[244px] h-[244px]
 					scale-[${
 						props.pressDuration === 0
 							? ' scale-[1] '

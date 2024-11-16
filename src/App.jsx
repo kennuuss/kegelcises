@@ -18,7 +18,7 @@ function App() {
 		setIntervalId(id)
 	}
 
-	const stopTimer = () => {
+	const stopTimer = (isMouseLeave) => {
 		clearInterval(intervalId)
 		setIsPressed(false)
 		if (currentCount <= 14) {
@@ -41,6 +41,7 @@ function App() {
 	const handleMouseLeave = () => {
 		if (isPressed) {
 			stopTimer()
+			setPressDuration(0)
 		}
 	}
 

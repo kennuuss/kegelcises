@@ -24,20 +24,23 @@ function KegelsButton(props) {
 			onTouchStart={handleTouchStart}
 			onTouchEnd={handleTouchEnd}
 			onTouchCancel={handleTouchCancel}
-			className={`bg-[#9B69FF] mx-auto rounded-full w-[244px] h-[244px] 
-				scale-[${
-					props.pressDuration === 0
-						? ' scale-100 '
-						: props.pressDuration === 1
-						? ' scale-90 '
-						: props.pressDuration === 2
-						? ' scale-75 '
-						: props.pressDuration === 3
-						? ' scale-50 '
-						: ' scale-50 '
-						
-				}]`}
-		/>
+			className='w-[244px] h-[244px]'
+		>
+			<div
+				className={`bg-[#9B69FF] transform transition-all duration-100 ease-in mx-auto rounded-full w-[244px] h-[244px] 
+					scale-[${
+						props.pressDuration === 0
+							? ' scale-[1] '
+							: props.pressDuration === 1
+							? ' scale-[0.90] '
+							: props.pressDuration === 2
+							? ' scale-[0.80] '
+							: props.pressDuration === 3
+							? ' scale-[0.70] '
+							: ' scale-[0.70] '
+					}]`}
+			/>
+		</button>
 	)
 }
 

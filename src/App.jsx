@@ -54,7 +54,9 @@ function App() {
 	return (
 		<div className='bg-white flex flex-col justify-center items-center gap-[10%] h-[100vh]'>
 			{/* Передаем currentCount в компонент RepCount */}
-			<RepCount currentCount={currentCount} setCount={setCount}>{currentCount}</RepCount>
+			<RepCount currentCount={currentCount} setCount={setCount}>
+				{currentCount}
+			</RepCount>
 			<H1>Зажми для старта!</H1>
 			{/* Передаем обработчики в KegelsButton */}
 			<KegelsButton
@@ -62,7 +64,10 @@ function App() {
 				handleMouseUp={handleMouseUp}
 				handleMouseLeave={handleMouseLeave}
 			/>
-			<Countdown> {pressDuration}</Countdown>
+			<Countdown pressDuration={pressDuration}>
+				{' '}
+				{/* pressDuration >0 &&  */ pressDuration}
+			</Countdown>
 		</div>
 	)
 }

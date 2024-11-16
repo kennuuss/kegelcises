@@ -24,7 +24,19 @@ function KegelsButton(props) {
 			onTouchStart={handleTouchStart}
 			onTouchEnd={handleTouchEnd}
 			onTouchCancel={handleTouchCancel}
-			className='bg-[#9B69FF] mx-auto rounded-full w-[244px] h-[244px]'
+			className={`bg-[#9B69FF] mx-auto rounded-full w-[244px] h-[244px] 
+				scale-[${
+					props.pressDuration === 0
+						? ' scale-100 '
+						: props.pressDuration === 1
+						? ' scale-90 '
+						: props.pressDuration === 2
+						? ' scale-75 '
+						: props.pressDuration === 3
+						? ' scale-50 '
+						: ' scale-50 '
+						
+				}]`}
 		/>
 	)
 }

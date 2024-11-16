@@ -5,16 +5,16 @@ import RepCount from './../Components/RepCount'
 import Countdown from './../Components/Countdown'
 
 function App() {
-	const [currentCount, setCount] = useState(1) // текущее количество
-	const [isPressed, setIsPressed] = useState(false) // состояние зажатия кнопки
-	const [pressDuration, setPressDuration] = useState(0) // продолжительность зажатия
-	const [intervalId, setIntervalId] = useState(null) // ID таймера для остановки
+	const [currentCount, setCount] = useState(1)
+	const [isPressed, setIsPressed] = useState(false)
+	const [pressDuration, setPressDuration] = useState(0)
+	const [intervalId, setIntervalId] = useState(null)
 
 	const startTimer = () => {
 		setPressDuration(0)
 		const id = setInterval(() => {
 			setPressDuration((prev) => prev + 1)
-		}, 1000) // обновляем каждую секунду
+		}, 1000) 
 		setIntervalId(id)
 	}
 
@@ -22,10 +22,10 @@ function App() {
 		clearInterval(intervalId)
 		setIsPressed(false)
 		if (currentCount <= 14) {
-			setCount((prev) => prev + 1) // Если условие выполняется, увеличиваем currentCount
+			setCount((prev) => prev + 1) 
 		}
 	}
-	// Обработчики событий для мыши
+
 	const handleMouseDown = () => {
 		setIsPressed(true)
 		startTimer()
@@ -36,7 +36,6 @@ function App() {
 			stopTimer()
 		}
 		setPressDuration(0)
-		/* ? currentCount >=15  */
 	}
 
 	const handleMouseLeave = () => {
@@ -47,27 +46,23 @@ function App() {
 
 	useEffect(() => {
 		return () => {
-			clearInterval(intervalId) // очищаем таймер при размонтировании компонента
+			clearInterval(intervalId)
 		}
 	}, [intervalId])
 
 	return (
 		<div className='bg-white flex flex-col justify-center items-center gap-[10%] h-[100vh]'>
-			{/* Передаем currentCount в компонент RepCount */}
 			<RepCount currentCount={currentCount} setCount={setCount}>
 				{currentCount}
 			</RepCount>
 			<H1>Зажми для старта!</H1>
-			{/* Передаем обработчики в KegelsButton */}
 			<KegelsButton
 				handleMouseDown={handleMouseDown}
 				handleMouseUp={handleMouseUp}
 				handleMouseLeave={handleMouseLeave}
+				pressDuration={pressDuration}
 			/>
-			<Countdown pressDuration={pressDuration}>
-				{' '}
-				{/* pressDuration >0 &&  */ pressDuration}
-			</Countdown>
+			<Countdown pressDuration={pressDuration}>{pressDuration}</Countdown>
 		</div>
 	)
 }

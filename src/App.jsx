@@ -3,6 +3,7 @@ import H1 from '../Components/H1'
 import KegelsButton from './../Components/KegelsButton'
 import RepCount from './../Components/RepCount'
 import Countdown from './../Components/Countdown'
+import LastRepWarning from '../Components/LastRepWarning'
 
 function App() {
 	const [currentCount, setCount] = useState(1)
@@ -36,7 +37,6 @@ function App() {
 			setPressDuration((prev) => prev - 1)
 		}, 1000)
 		setRestDuration(restId) */
-
 	}
 
 	const handleMouseDown = () => {
@@ -80,6 +80,7 @@ function App() {
 				isPressed={isPressed}
 			/>
 			<Countdown pressDuration={pressDuration}>{pressDuration}</Countdown>
+			<LastRepWarning />
 		</div>
 	)
 }

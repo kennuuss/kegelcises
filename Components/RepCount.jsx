@@ -7,7 +7,11 @@ function RepCount({ children, setCount, currentCount }) {
 	}
 	return (
 		<div className='flex flex-col gap-4'>
-			<button className='w-[32px] h-[32px] mx-auto' onClick={eraceCount} onTouchStart={eraceCount}>
+			<button
+				className='w-[32px] h-[32px] mx-auto'
+				onClick={eraceCount}
+				onTouchStart={eraceCount}
+			>
 				{currentCount > 1 && SVG.SVGTrashBin}
 			</button>
 			<div className='text-[rgb(124,124,124)] text-[24px]'>{children} / 15</div>

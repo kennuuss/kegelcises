@@ -3,10 +3,12 @@ import H1 from '../Components/H1'
 import KegelsButton from './../Components/KegelsButton'
 import RepCount from './../Components/RepCount'
 import Countdown from './../Components/Countdown'
+import LastRepWarning from '../Components/LastRepWarning'
 
 function App() {
-	const [currentCount, setCount] = useState(1)
+	const [currentCount, setCount] = useState(/* 1 */ 14)
 	const [isPressed, setIsPressed] = useState(false)
+	const [isLastRepWarningShowing, setIsLastRepWarningShowing] = useState(false)
 	const [pressDuration, setPressDuration] = useState(0)
 	const [intervalId, setIntervalId] = useState(null)
 	const [isItRestNow, setIsItRestNow] = useState(false)
@@ -24,19 +26,14 @@ function App() {
 		clearInterval(intervalId)
 		setIsPressed(false)
 
-		/* setIsItRestNow(true) */
 		setRestDuration(pressDuration)
 		setPressDuration(0)
 
 		if (currentCount <= 14) {
 			setCount((prev) => prev + 1)
 		}
-
-		/* const restId = setInterval(() => {
-			setPressDuration((prev) => prev - 1)
-		}, 1000)
-		setRestDuration(restId) */
-
+		
+		currentCount === 14 && setIsLastRepWarningShowing(true)
 	}
 
 	const handleMouseDown = () => {
@@ -80,6 +77,11 @@ function App() {
 				isPressed={isPressed}
 			/>
 			<Countdown pressDuration={pressDuration}>{pressDuration}</Countdown>
+			<LastRepWarning
+				currentCount={currentCount}
+				isLastRepWarningShowing={isLastRepWarningShowing}
+				setIsLastRepWarningShowing={setIsLastRepWarningShowing}
+			/>
 		</div>
 	)
 }

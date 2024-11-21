@@ -6,9 +6,10 @@ import Countdown from './../Components/Countdown'
 import LastRepWarning from '../Components/LastRepWarning'
 
 function App() {
-	const [currentCount, setCount] = useState(/* 1 */ 14)
+	const [currentCount, setCount] = useState(1)
 	const [isPressed, setIsPressed] = useState(false)
 	const [isLastRepWarningShowing, setIsLastRepWarningShowing] = useState(false)
+	const [isSetFinished, setIsSetFinished] = useState(false)
 	const [pressDuration, setPressDuration] = useState(0)
 	const [intervalId, setIntervalId] = useState(null)
 	const [isItRestNow, setIsItRestNow] = useState(false)
@@ -33,7 +34,8 @@ function App() {
 			setCount((prev) => prev + 1)
 		}
 		
-		currentCount === 14 && setIsLastRepWarningShowing(true)
+		currentCount === 13 && setIsLastRepWarningShowing(true)
+		currentCount === 14 && setIsSetFinished(true)
 	}
 
 	const handleMouseDown = () => {
@@ -81,6 +83,7 @@ function App() {
 				currentCount={currentCount}
 				isLastRepWarningShowing={isLastRepWarningShowing}
 				setIsLastRepWarningShowing={setIsLastRepWarningShowing}
+				isSetFinished={isSetFinished}
 			/>
 		</div>
 	)

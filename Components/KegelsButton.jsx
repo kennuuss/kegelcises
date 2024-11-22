@@ -24,10 +24,12 @@ function KegelsButton(props) {
 			onTouchStart={handleTouchStart}
 			onTouchEnd={handleTouchEnd}
 			onTouchCancel={handleTouchCancel}
-			className='w-[244px] h-[244px]'
+			className={`w-[350px] h-[350px] flex justify-center items-center ${
+				props.isItRestNow && ' pointer-events-none cursor-wait '
+			}`}
 		>
 			<div
-				className={`bg-[#9B69FF] transform transition-all duration-100 ease-in mx-auto rounded-full w-[244px] h-[244px]
+				className={`bg-[#9B69FF] transform transition-all duration-100 ease-in rounded-full w-[244px] h-[244px]
 					scale-[${
 						props.pressDuration === 0
 							? ' scale-[1] '

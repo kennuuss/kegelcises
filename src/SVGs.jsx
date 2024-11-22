@@ -39,3 +39,28 @@ export const SVGTrashBin = (
 		/>
 	</svg>
 )
+
+export const SVGRestart = (
+	<svg
+		xmlns='http://www.w3.org/2000/svg'
+		width='38'
+		height='38'
+		viewBox='0 0 38 38'
+		fill='none'
+	>
+		<path
+			d='M19 4.75C22.3615 4.75005 25.6148 5.93845 28.1848 8.10516C30.7549 10.2719 32.4762 13.2774 33.0446 16.5905C33.613 19.9036 32.9919 23.3109 31.291 26.2104C29.5901 29.1098 26.9189 31.3146 23.7497 32.4351C20.5804 33.5555 17.1171 33.5196 13.9718 32.3335C10.8265 31.1474 8.20172 28.8876 6.56144 25.9534C4.92116 23.0193 4.37096 19.5997 5.00807 16.2992C5.64518 12.9986 7.42859 10.0295 10.0431 7.91667'
+			stroke='black'
+			strokeWidth='2.5'
+			strokeLinecap='round'
+			strokeLinejoin='round'
+		/>
+		<path
+			d='M4.75 7.125H11.0833V13.4583'
+			stroke='black'
+			strokeWidth='2.5'
+			strokeLinecap='round'
+			strokeLinejoin='round'
+		/>
+	</svg>
+)

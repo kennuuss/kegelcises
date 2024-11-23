@@ -3,19 +3,51 @@ import H1 from '../Components/H1'
 import KegelsButton from './../Components/KegelsButton'
 import RepCount from './../Components/RepCount'
 import Countdown from './../Components/Countdown'
-import LastRepWarning from '../Components/LastRepWarning'
+import Warning from '../Components/Warning'
 
 function App() {
 	const [currentCount, setCount] = useState(1)
 	const [isPressed, setIsPressed] = useState(false)
-	const [isLastRepWarningShowing, setIsLastRepWarningShowing] = useState(false)
 	const [isSetStarted, setIsSetStarted] = useState(false)
 	const [isSetFinished, setIsSetFinished] = useState(false)
 	const [pressDuration, setPressDuration] = useState(0)
 	const [intervalId, setIntervalId] = useState(null)
 	const [isItRestNow, setIsItRestNow] = useState(false)
 	const [restDuration, setRestDuration] = useState(0)
-	const calculatedRestDuration = pressDuration * 2
+	const [isWarningShowing, setIsWarningShowing] = useState(false)
+	const [restId, setRestId] = useState(null)
+
+	const [breathStage, setBreathStage] = useState('')
+	const [breathTimer, setBreathTimer] = useState(null)
+
+	const startMeditation = () => {
+		let stage = 'Вдох' // 0 - вдох, 1 - задержка, 2 - выдох
+		setBreathStage('Вдох') // Начинаем с вдоха
+		setBreathTimer(
+			setInterval(
+				() => {
+					if (stage === 'Вдох') {
+						setBreathStage('Вдох')
+						stage = 'Задержка'
+					} else if (stage === 'Задержка') {
+						setBreathStage('Задержка')
+						stage = 'Выдох'
+					} else {
+						setBreathStage('Выдох')
+						stage = 'Выдох'
+					}
+				},
+				stage === 'Вдох' ? 4000 : stage === 1 ? 1000 : 8000
+			) // Меняем интервалы
+		)
+	}
+
+	useEffect(startMeditation, [isPressed])
+
+	const stopMeditation = () => {
+		clearInterval(breathTimer)
+		setBreathStage(null)
+	}
 
 	const startTimer = () => {
 		setPressDuration(0)
@@ -25,19 +57,34 @@ function App() {
 		setIntervalId(id)
 	}
 
+	const startRestTimer = () => {
+		const id = setInterval(() => {
+			setRestDuration((prev) => {
+				if (prev <= 1) {
+					clearInterval(id)
+					setIsItRestNow(false)
+				}
+				return prev - 1
+			})
+		}, 1000)
+		setRestId(id)
+	}
+
 	const stopTimer = () => {
 		clearInterval(intervalId)
 		setIsPressed(false)
-
 		setPressDuration(0)
 
 		if (currentCount <= 14) {
 			setCount((prev) => prev + 1)
 		}
 
-		currentCount === 13 && setIsLastRepWarningShowing(true)
-		currentCount === 14 && setIsSetFinished(true)
-		currentCount === 14 && setIsSetStarted(false)
+		if (currentCount === 14) {
+			setIsSetFinished(true)
+			setIsSetStarted(false)
+		}
+
+		currentCount === 13 && setIsWarningShowing(true)
 	}
 
 	const handleMouseDown = () => {
@@ -47,13 +94,14 @@ function App() {
 	}
 
 	const handleMouseUp = () => {
-		if (pressDuration >= 1) {
+		if (pressDuration >= 5) {
 			const calculatedRestDuration = pressDuration * 2
-			setRestDuration(calculatedRestDuration)
+			const cappedRestDuration =
+				calculatedRestDuration >= 60 ? 60 : calculatedRestDuration
+			setRestDuration(cappedRestDuration)
 			setIsItRestNow(true)
-			console.log('Время отдыха: ', calculatedRestDuration)
-		} else {
-			console.log('Без отдыха так как длительность зажатия меньше 1 секунды')
+			startRestTimer()
+			console.log('Время отдыха: ', cappedRestDuration)
 		}
 
 		if (isPressed) {
@@ -62,18 +110,20 @@ function App() {
 	}
 
 	const handleMouseLeave = () => {
-		const calculatedRestDuration = pressDuration * 2
-		calculatedRestDuration > 0 && handleMouseUp()
+		if (pressDuration >= 5) {
+			handleMouseUp()
+		}
 	}
 
 	useEffect(() => {
 		return () => {
 			clearInterval(intervalId)
+			clearInterval(restId)
 		}
-	}, [intervalId])
+	}, [intervalId, restId])
 
 	return (
-		<div className='bg-white flex flex-col justify-center items-center gap-[10%] h-[100vh]'>
+		<main className='bg-white flex flex-col justify-center items-center py-[10vh] md:py-0 gap-[10vh] h-[100vh]'>
 			<RepCount
 				setIsSetStarted={setIsSetStarted}
 				setIsSetFinished={setIsSetFinished}
@@ -83,8 +133,8 @@ function App() {
 			<H1>
 				{isSetStarted
 					? isItRestNow
-						? `Отдых ${calculatedRestDuration} секунд`
-						: 'Вдох'
+						? `Отдых`
+						: breathStage
 					: isSetFinished
 					? 'Сет завершен!'
 					: 'Нажми чтобы начать!'}
@@ -97,14 +147,26 @@ function App() {
 				isPressed={isPressed}
 				isItRestNow={isItRestNow}
 			/>
-			<Countdown pressDuration={pressDuration}>{pressDuration}</Countdown>
-			<LastRepWarning
-				currentCount={currentCount}
-				isLastRepWarningShowing={isLastRepWarningShowing}
-				setIsLastRepWarningShowing={setIsLastRepWarningShowing}
-				isSetFinished={isSetFinished}
-			/>
-		</div>
+			<Countdown pressDuration={pressDuration}>
+				{isItRestNow ? restId : pressDuration}
+			</Countdown>
+			{currentCount === 14 && (
+				<Warning
+					currentCount={currentCount}
+					isWarningShowing={isWarningShowing}
+					setIsWarningShowing={setIsWarningShowing}
+					message='Последнее повторение!'
+				/>
+			)}
+			{currentCount === 15 && (
+				<Warning
+					currentCount={currentCount}
+					isWarningShowing={isWarningShowing}
+					setIsWarningShowing={setIsWarningShowing}
+					message='Сет завершен!'
+				/>
+			)}
+		</main>
 	)
 }
 

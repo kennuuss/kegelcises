@@ -149,11 +149,18 @@ function App() {
 			<RepCount
 				setIsSetStarted={setIsSetStarted}
 				setIsSetFinished={setIsSetFinished}
+				setRestDuration={setRestDuration}
 				currentCount={currentCount}
 				setCount={setCount}
 			/>
 			<H1>
-				{isPressed}
+				{isPressed
+					? pressDuration >= 5
+						? breathStage
+						: 'Держи!'
+					: isItRestNow
+					? 'Отдых'
+					: isSetStarted ? 'Нажми когда будешь готов' : isSetFinished ? `Ты закончил сет! Молодец!` : 'Зажми что бы начать!'}
 
 				{/* {isSetStarted
 					? isItRestNow
@@ -168,9 +175,9 @@ function App() {
 				handleMouseUp={handleMouseUp}
 				handleMouseLeave={handleMouseLeave}
 				pressDuration={pressDuration}
-				isPressed={isPressed}
 				isItRestNow={isItRestNow}
 				isPulsing={isPulsing}
+				isSetFinished={isSetFinished}
 			/>
 			<Countdown restDuration={restDuration} pressDuration={pressDuration}>
 				{isItRestNow ? restDuration : pressDuration}

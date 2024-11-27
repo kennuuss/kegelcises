@@ -16,43 +16,61 @@ function App() {
 	const [restDuration, setRestDuration] = useState(0)
 	const [isWarningShowing, setIsWarningShowing] = useState(false)
 	const [restId, setRestId] = useState(null)
-
+	const [isPulsing, setIsPulsing] = useState(false)
 	const [breathStage, setBreathStage] = useState('')
 	const [breathTimer, setBreathTimer] = useState(null)
 
+	useEffect(() => {
+		if (!isItRestNow) {
+			stopMeditation()
+		}
+	}, [isItRestNow])
+
 	const startMeditation = () => {
-		let stage = 'Вдох' // 0 - вдох, 1 - задержка, 2 - выдох
-		setBreathStage('Вдох') // Начинаем с вдоха
-		setBreathTimer(
-			setInterval(
-				() => {
-					if (stage === 'Вдох') {
-						setBreathStage('Вдох')
-						stage = 'Задержка'
-					} else if (stage === 'Задержка') {
-						setBreathStage('Задержка')
-						stage = 'Выдох'
-					} else {
-						setBreathStage('Выдох')
-						stage = 'Выдох'
-					}
-				},
-				stage === 'Вдох' ? 4000 : stage === 1 ? 1000 : 8000
-			) // Меняем интервалы
-		)
+		let stage = 'Вдох'
+		let counter = 0
+		setBreathStage('Вдох')
+
+		const id = setInterval(() => {
+			counter++
+			if (stage === 'Вдох' && counter === 4) {
+				setBreathStage('Задержка')
+				stage = 'Задержка'
+				counter = 0
+			} else if (stage === 'Задержка' && counter === 7) {
+				setBreathStage('Выдох')
+				stage = 'Выдох'
+				counter = 0
+			} else if (stage === 'Выдох' && counter === 8) {
+				setBreathStage('Вдох')
+				stage = 'Вдох'
+				counter = 0
+			}
+		}, 1000)
+
+		setBreathTimer(id)
 	}
 
 	useEffect(startMeditation, [isPressed])
 
 	const stopMeditation = () => {
-		clearInterval(breathTimer)
+		if (breathTimer) {
+			clearInterval(breathTimer)
+			setBreathTimer(null)
+		}
 		setBreathStage(null)
 	}
 
 	const startTimer = () => {
 		setPressDuration(0)
 		const id = setInterval(() => {
-			setPressDuration((prev) => prev + 1)
+			setPressDuration((prev) => {
+				const newDuration = prev + 1
+				if (newDuration > 3) {
+					setIsPulsing(true)
+				}
+				return newDuration
+			})
 		}, 1000)
 		setIntervalId(id)
 	}
@@ -63,6 +81,7 @@ function App() {
 				if (prev <= 1) {
 					clearInterval(id)
 					setIsItRestNow(false)
+					return 0
 				}
 				return prev - 1
 			})
@@ -94,14 +113,17 @@ function App() {
 	}
 
 	const handleMouseUp = () => {
+		setIsPressed(false)
+		setIsPulsing(false)
+		stopMeditation()
+
 		if (pressDuration >= 5) {
-			const calculatedRestDuration = pressDuration * 2
-			const cappedRestDuration =
-				calculatedRestDuration >= 60 ? 60 : calculatedRestDuration
+			const calculatedRestDuration = Math.floor(pressDuration * 1.5)
+			const cappedRestDuration = Math.min(calculatedRestDuration, 60)
 			setRestDuration(cappedRestDuration)
 			setIsItRestNow(true)
 			startRestTimer()
-			console.log('Время отдыха: ', cappedRestDuration)
+			startMeditation()
 		}
 
 		if (isPressed) {
@@ -123,7 +145,7 @@ function App() {
 	}, [intervalId, restId])
 
 	return (
-		<main className='bg-white flex flex-col justify-center items-center py-[10vh] md:py-0 gap-[10vh] h-[100vh]'>
+		<main className='bg-white dark:bg-black flex flex-col justify-center items-center py-[10vh] md:py-0 gap-[10vh] h-[100vh]'>
 			<RepCount
 				setIsSetStarted={setIsSetStarted}
 				setIsSetFinished={setIsSetFinished}
@@ -131,13 +153,15 @@ function App() {
 				setCount={setCount}
 			/>
 			<H1>
-				{isSetStarted
+				{isPressed}
+
+				{/* {isSetStarted
 					? isItRestNow
 						? `Отдых`
 						: breathStage
 					: isSetFinished
 					? 'Сет завершен!'
-					: 'Нажми чтобы начать!'}
+					: 'Нажми чтобы начать!'} */}
 			</H1>
 			<KegelsButton
 				handleMouseDown={handleMouseDown}
@@ -146,9 +170,10 @@ function App() {
 				pressDuration={pressDuration}
 				isPressed={isPressed}
 				isItRestNow={isItRestNow}
+				isPulsing={isPulsing}
 			/>
-			<Countdown pressDuration={pressDuration}>
-				{isItRestNow ? restId : pressDuration}
+			<Countdown restDuration={restDuration} pressDuration={pressDuration}>
+				{isItRestNow ? restDuration : pressDuration}
 			</Countdown>
 			{currentCount === 14 && (
 				<Warning

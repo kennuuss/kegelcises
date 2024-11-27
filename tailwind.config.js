@@ -7,7 +7,17 @@ module.exports = {
 		'./Containers/**/*.{js,ts,jsx,tsx}',
 	],
 	theme: {
-		extend: {},
+		extend: {
+			animation: {
+				pulse: 'pulseSize 1s ease-in-out infinite',
+			},
+			keyframes: {
+				pulse: {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(0.95)' },
+				},
+			},
+		},
 		screens: {
 			sm: '640px', // Мобильные устройства
 			md: '768px', // Плашеты

@@ -24,12 +24,13 @@ function KegelsButton(props) {
 			onTouchStart={handleTouchStart}
 			onTouchEnd={handleTouchEnd}
 			onTouchCancel={handleTouchCancel}
-			className={`w-[350px] h-[350px] flex justify-center items-center ${
-				props.isItRestNow && ' pointer-events-none cursor-wait '
-			}`}
+			className={`w-[350px] h-[350px] flex transition-all duration-150 justify-center items-center 
+				${props.isPressed && ' scale-105 '} 
+				${props.isItRestNow && ' pointer-events-none cursor-wait '}
+				${props.isPulsing ? 'animate-pulse' : ''}`}
 		>
 			<div
-				className={`bg-[#9B69FF] transform transition-all duration-100 ease-in rounded-full w-[244px] h-[244px]
+				className={`bg-[#9B69FF] transform transition-all duration-150 ease-in rounded-full w-[244px] h-[244px]
 					scale-[${
 						props.pressDuration === 0
 							? ' scale-[1] '

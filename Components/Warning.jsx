@@ -1,34 +1,32 @@
 import React, { useEffect } from 'react'
 import H1 from './H1'
 
-function Warning({
-	isWarningShowing,
-	setIsWarningShowing,
-	message
-}) {
+function Warning(props) {
 	useEffect(() => {
-		if (isWarningShowing) {
+		if (props.isWarningShowing) {
 			const timer = setTimeout(() => {
-				setIsWarningShowing(false) // Скрыть предупреждение через 3 секунды
+				props.setIsWarningShowing(false)
 			}, 3000)
 			return () => clearTimeout(timer)
 		}
-	}, [isWarningShowing, setIsWarningShowing])
+	}, [props.isWarningShowing, props.setIsWarningShowing])
 
 	const handleTouchStart = (e) => {
 		e.preventDefault()
-		setIsWarningShowing(false)
+		props.setIsWarningShowing(false)
 	}
 
 	return (
 		<button
-			onClick={() => setIsWarningShowing(false)}
-			onTouchStart={handleTouchStart}
+			onClick={() => props.setIsWarningShowing(false)}
+			onTouchStart={(e) => handleTouchStart}
 			className={`flex justify-center items-center h-[15vh] transition-all py-8 duration-500 ease-in-out absolute top-[20px] left-[20px] right-[20px] rounded-3xl 
-        ${isWarningShowing ? ' translate-y-0 ' : ' translate-y-[-200%] '} 
-        ${message === 'Сет завершен!' ? ' bg-[#74BA89] ' : ' bg-[#E0C477] '} `}
+        ${props.isWarningShowing ? 'translate-y-0' : 'translate-y-[-200%]'} 
+        ${
+					props.message === 'Сет завершен!' ? 'bg-[#74BA89]' : 'bg-[#E0C477]'
+				} `}
 		>
-			<H1 className='text-white'>{message}</H1>
+			<H1 className='text-white'>{props.message}</H1>
 		</button>
 	)
 }

@@ -6,9 +6,15 @@ function KegelsButton(props) {
 			onMouseDown={props.handleMouseDown}
 			onMouseUp={props.handleMouseUp}
 			onMouseLeave={props.handleMouseLeave}
-			onTouchStart={props.handleMouseDown}
-			onTouchEnd={props.handleMouseUp}
-			onTouchCancel={props.handleMouseLeave}
+			onTouchStart={(e) => {
+				e.preventDefault(), props.handleMouseDown()
+			}}
+			onTouchEnd={(e) => {
+				e.preventDefault(), props.handleMouseUp()
+			}}
+			onTouchCancel={(e) => {
+				e.preventDefault(), props.handleMouseLeave()
+			}}
 			className={`w-[350px] h-[350px] flex hover:scale-105 transition-all duration-150 lg:active:scale-110 justify-center items-center 
 				${
 					props.isResting || props.isSetFinished

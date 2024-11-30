@@ -19,6 +19,15 @@ function App() {
 	const [restId, setRestId] = useState(null)
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
+	const [warnings, setWarnings] = useState([]) // Массив для предупреждений
+
+	const addWarning = (message) => {
+		setWarnings((prevWarnings) => [
+			...prevWarnings,
+			{ message, id: Date.now() }, // ID для уникальности каждого предупреждения
+		])
+	}
+
 
 	useEffect(() => {
 		if (!isResting) {
@@ -167,7 +176,7 @@ function App() {
 					: isSetStarted
 					? ''
 					: isSetFinished
-					? `Ты закончил сет! Молодец!`
+					? `Молодец!`
 					: ''}
 			</H1>
 			<KegelsButton

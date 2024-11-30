@@ -15,7 +15,7 @@ function App() {
 	const [isSetStarted, setIsSetStarted] = useState(false)
 	const [isSetFinished, setIsSetFinished] = useState(false)
 	const [isWarningShowing, setIsWarningShowing] = useState(false)
-	const [breathStage, setBreathStage] = useState('')
+	const [breathStage, setBreathStage] = useState('') // начальная фаза дыхания
 	const [restId, setRestId] = useState(null)
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
@@ -28,9 +28,7 @@ function App() {
 
 	//!мышь
 	const handleMouseDown = () => {
-		/* currentCount === 0 && setCount(1) */
 		setIsSetStarted(true)
-
 		setIsPressed(true)
 		startTimer()
 	}
@@ -45,7 +43,7 @@ function App() {
 			setRestDuration(cappedRestDuration)
 			setIsResting(true)
 			startRestTimer()
-			startMeditation()
+			startMeditation() // Начать медитацию после 5 секунд
 		}
 
 		if (isPressed) {
@@ -61,31 +59,39 @@ function App() {
 
 	//!медитация
 	const startMeditation = () => {
-		let stage = 'Вдох'
+		let stage = 'Вдох' // Начинаем всегда с "Вдох"
 		let counter = 0
 		setBreathStage('Вдох')
 
+		// Задержка начала отсчета (пока не прошло 5 секунд)
 		const id = setInterval(() => {
-			counter++
-			if (stage === 'Вдох' && counter === 9) {
-				setBreathStage('Задержка')
-				stage = 'Задержка'
-				counter = 0
-			} else if (stage === 'Задержка' && counter === 2) {
-				setBreathStage('Выдох')
-				stage = 'Выдох'
-				counter = 0
-			} else if (stage === 'Выдох' && counter === 8) {
-				setBreathStage('Вдох')
-				stage = 'Вдох'
-				counter = 0
+			if (pressDuration >= 5) { // Проверяем, что прошло 5 секунд
+				counter++
+				if (stage === 'Вдох' && counter === 4) {
+					setBreathStage('Задержка')
+					stage = 'Задержка'
+					counter = 0
+				} else if (stage === 'Задержка' && counter === 2) {
+					setBreathStage('Выдох')
+					stage = 'Выдох'
+					counter = 0
+				} else if (stage === 'Выдох' && counter === 8) {
+					setBreathStage('Вдох')
+					stage = 'Вдох'
+					counter = 0
+				}
 			}
 		}, 1000)
 
 		setTimerId(id)
 	}
 
-	useEffect(startMeditation, [currentCount])
+	useEffect(() => {
+		// Убедитесь, что медитация начинается только после 5 секунд
+		if (pressDuration >= 5 && !timerId) {
+			startMeditation()
+		}
+	}, [pressDuration]) // Используем pressDuration для старта медитации
 
 	const stopMeditation = () => {
 		if (timerId) {
@@ -99,10 +105,7 @@ function App() {
 	const startTimer = () => {
 		setPressDuration(0)
 		const id = setInterval(() => {
-			setPressDuration((prev) => {
-				const newDuration = prev + 1
-				return newDuration
-			})
+			setPressDuration((prev) => prev + 1)
 		}, 1000)
 		setIntervalId(id)
 	}
@@ -146,7 +149,7 @@ function App() {
 	}, [intervalId, restId])
 
 	return (
-		<main className='bg-white dark:bg-black flex flex-col justify-center items-center lg:py-0 py-[12vh] gap-[6vh] h-[100vh]'>
+		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-0 py-[12vh] gap-[6vh] h-[100vh]'>
 			<RepCount
 				setIsSetStarted={setIsSetStarted}
 				setIsSetFinished={setIsSetFinished}
@@ -158,19 +161,19 @@ function App() {
 				{isPressed
 					? pressDuration >= 5
 						? breathStage
-						: 'Держи!'
+						: ''
 					: isResting
 					? 'Отдых'
 					: isSetStarted
-					? 'Нажми когда будешь готов'
+					? ''
 					: isSetFinished
 					? `Ты закончил сет! Молодец!`
-					: 'Зажми что бы начать!'}
+					: ''}
 			</H1>
 			<KegelsButton
 				handleMouseDown={handleMouseDown}
 				handleMouseLeave={handleMouseLeave}
-			handleMouseUp={handleMouseUp}
+				handleMouseUp={handleMouseUp}
 				pressDuration={pressDuration}
 				isResting={isResting}
 				isSetFinished={isSetFinished}

@@ -7,24 +7,23 @@ import Warning from '../Components/Warning'
 
 function App() {
 	const [currentCount, setCount] = useState(1)
+	const [pressDuration, setPressDuration] = useState(0)
+	const [restDuration, setRestDuration] = useState(0)
+	const [isResting, setIsResting] = useState(false)
 	const [isPressed, setIsPressed] = useState(false)
 	const [isSetStarted, setIsSetStarted] = useState(false)
 	const [isSetFinished, setIsSetFinished] = useState(false)
-	const [pressDuration, setPressDuration] = useState(0)
-	const [intervalId, setIntervalId] = useState(null)
-	const [isItRestNow, setIsItRestNow] = useState(false)
-	const [restDuration, setRestDuration] = useState(0)
 	const [isWarningShowing, setIsWarningShowing] = useState(false)
-	const [restId, setRestId] = useState(null)
-	const [isPulsing, setIsPulsing] = useState(false)
 	const [breathStage, setBreathStage] = useState('')
-	const [breathTimer, setBreathTimer] = useState(null)
+	const [restId, setRestId] = useState(null)
+	const [timerId, setTimerId] = useState(null)
+	const [intervalId, setIntervalId] = useState(null)
 
 	useEffect(() => {
-		if (!isItRestNow) {
+		if (!isResting) {
 			stopMeditation()
 		}
-	}, [isItRestNow])
+	}, [isResting])
 
 	const startMeditation = () => {
 		let stage = 'Вдох'
@@ -33,11 +32,11 @@ function App() {
 
 		const id = setInterval(() => {
 			counter++
-			if (stage === 'Вдох' && counter === 4) {
+			if (stage === 'Вдох' && counter === 9) {
 				setBreathStage('Задержка')
 				stage = 'Задержка'
 				counter = 0
-			} else if (stage === 'Задержка' && counter === 7) {
+			} else if (stage === 'Задержка' && counter === 2) {
 				setBreathStage('Выдох')
 				stage = 'Выдох'
 				counter = 0
@@ -48,15 +47,15 @@ function App() {
 			}
 		}, 1000)
 
-		setBreathTimer(id)
+		setTimerId(id)
 	}
 
-	useEffect(startMeditation, [isPressed])
+	useEffect(startMeditation, [currentCount])
 
 	const stopMeditation = () => {
-		if (breathTimer) {
-			clearInterval(breathTimer)
-			setBreathTimer(null)
+		if (timerId) {
+			clearInterval(timerId)
+			setTimerId(null)
 		}
 		setBreathStage(null)
 	}
@@ -66,9 +65,6 @@ function App() {
 		const id = setInterval(() => {
 			setPressDuration((prev) => {
 				const newDuration = prev + 1
-				if (newDuration > 3) {
-					setIsPulsing(true)
-				}
 				return newDuration
 			})
 		}, 1000)
@@ -80,7 +76,7 @@ function App() {
 			setRestDuration((prev) => {
 				if (prev <= 1) {
 					clearInterval(id)
-					setIsItRestNow(false)
+					setIsResting(false)
 					return 0
 				}
 				return prev - 1
@@ -107,21 +103,22 @@ function App() {
 	}
 
 	const handleMouseDown = () => {
-		currentCount >= 1 && setIsSetStarted(true)
+		/* currentCount === 0 && setCount(1) */
+		setIsSetStarted(true)
+
 		setIsPressed(true)
 		startTimer()
 	}
 
 	const handleMouseUp = () => {
 		setIsPressed(false)
-		setIsPulsing(false)
 		stopMeditation()
 
 		if (pressDuration >= 5) {
 			const calculatedRestDuration = Math.floor(pressDuration * 1.5)
 			const cappedRestDuration = Math.min(calculatedRestDuration, 60)
 			setRestDuration(cappedRestDuration)
-			setIsItRestNow(true)
+			setIsResting(true)
 			startRestTimer()
 			startMeditation()
 		}
@@ -145,7 +142,7 @@ function App() {
 	}, [intervalId, restId])
 
 	return (
-		<main className='bg-white dark:bg-black flex flex-col justify-center items-center py-[10vh] md:py-0 gap-[10vh] h-[100vh]'>
+		<main className='bg-white dark:bg-black flex flex-col justify-center items-center lg:py-0 py-[12vh] gap-[6vh] h-[100vh]'>
 			<RepCount
 				setIsSetStarted={setIsSetStarted}
 				setIsSetFinished={setIsSetFinished}
@@ -158,29 +155,24 @@ function App() {
 					? pressDuration >= 5
 						? breathStage
 						: 'Держи!'
-					: isItRestNow
+					: isResting
 					? 'Отдых'
-					: isSetStarted ? 'Нажми когда будешь готов' : isSetFinished ? `Ты закончил сет! Молодец!` : 'Зажми что бы начать!'}
-
-				{/* {isSetStarted
-					? isItRestNow
-						? `Отдых`
-						: breathStage
+					: isSetStarted
+					? 'Нажми когда будешь готов'
 					: isSetFinished
-					? 'Сет завершен!'
-					: 'Нажми чтобы начать!'} */}
+					? `Ты закончил сет! Молодец!`
+					: 'Зажми что бы начать!'}
 			</H1>
 			<KegelsButton
 				handleMouseDown={handleMouseDown}
 				handleMouseUp={handleMouseUp}
 				handleMouseLeave={handleMouseLeave}
 				pressDuration={pressDuration}
-				isItRestNow={isItRestNow}
-				isPulsing={isPulsing}
+				isResting={isResting}
 				isSetFinished={isSetFinished}
 			/>
 			<Countdown restDuration={restDuration} pressDuration={pressDuration}>
-				{isItRestNow ? restDuration : pressDuration}
+				{isResting ? restDuration : pressDuration}
 			</Countdown>
 			{currentCount === 14 && (
 				<Warning

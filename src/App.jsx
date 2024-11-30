@@ -6,6 +6,7 @@ import Countdown from './../Components/Countdown'
 import Warning from '../Components/Warning'
 
 function App() {
+	//!хуки
 	const [currentCount, setCount] = useState(1)
 	const [pressDuration, setPressDuration] = useState(0)
 	const [restDuration, setRestDuration] = useState(0)
@@ -25,6 +26,40 @@ function App() {
 		}
 	}, [isResting])
 
+	//!мышь
+	const handleMouseDown = () => {
+		/* currentCount === 0 && setCount(1) */
+		setIsSetStarted(true)
+
+		setIsPressed(true)
+		startTimer()
+	}
+
+	const handleMouseUp = () => {
+		setIsPressed(false)
+		stopMeditation()
+
+		if (pressDuration >= 5) {
+			const calculatedRestDuration = Math.floor(pressDuration * 1.5)
+			const cappedRestDuration = Math.min(calculatedRestDuration, 60)
+			setRestDuration(cappedRestDuration)
+			setIsResting(true)
+			startRestTimer()
+			startMeditation()
+		}
+
+		if (isPressed) {
+			stopTimer()
+		}
+	}
+
+	const handleMouseLeave = () => {
+		if (pressDuration >= 5) {
+			handleMouseUp()
+		}
+	}
+
+	//!медитация
 	const startMeditation = () => {
 		let stage = 'Вдох'
 		let counter = 0
@@ -60,6 +95,7 @@ function App() {
 		setBreathStage(null)
 	}
 
+	//!таймер
 	const startTimer = () => {
 		setPressDuration(0)
 		const id = setInterval(() => {
@@ -102,38 +138,6 @@ function App() {
 		currentCount === 13 && setIsWarningShowing(true)
 	}
 
-	const handleMouseDown = () => {
-		/* currentCount === 0 && setCount(1) */
-		setIsSetStarted(true)
-
-		setIsPressed(true)
-		startTimer()
-	}
-
-	const handleMouseUp = () => {
-		setIsPressed(false)
-		stopMeditation()
-
-		if (pressDuration >= 5) {
-			const calculatedRestDuration = Math.floor(pressDuration * 1.5)
-			const cappedRestDuration = Math.min(calculatedRestDuration, 60)
-			setRestDuration(cappedRestDuration)
-			setIsResting(true)
-			startRestTimer()
-			startMeditation()
-		}
-
-		if (isPressed) {
-			stopTimer()
-		}
-	}
-
-	const handleMouseLeave = () => {
-		if (pressDuration >= 5) {
-			handleMouseUp()
-		}
-	}
-
 	useEffect(() => {
 		return () => {
 			clearInterval(intervalId)
@@ -165,8 +169,8 @@ function App() {
 			</H1>
 			<KegelsButton
 				handleMouseDown={handleMouseDown}
-				handleMouseUp={handleMouseUp}
 				handleMouseLeave={handleMouseLeave}
+			handleMouseUp={handleMouseUp}
 				pressDuration={pressDuration}
 				isResting={isResting}
 				isSetFinished={isSetFinished}

@@ -26,7 +26,7 @@ function Warning(props) {
 					props.message === 'Сет завершен!' ? 'bg-[#74BA89]' : 'bg-[#E0C477]'
 				} `}
 		>
-			<H1 className='text-white'>{props.message}</H1>
+			<H1 className=' text-white '>{props.message}</H1>
 		</button>
 	)
 }

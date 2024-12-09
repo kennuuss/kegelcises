@@ -192,7 +192,6 @@ function App() {
 				currentCount={currentCount}
 				isWarningShowing={isWarningShowing}
 				setIsWarningShowing={setIsWarningShowing}
-				message='Set is over!'
 			/>
 			{/* {currentCount === 14 && (
 				<Warning

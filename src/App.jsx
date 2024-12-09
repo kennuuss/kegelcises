@@ -15,18 +15,52 @@ function App() {
 	const [isSetStarted, setIsSetStarted] = useState(false)
 	const [isSetFinished, setIsSetFinished] = useState(false)
 	const [isWarningShowing, setIsWarningShowing] = useState(false)
-	const [breathStage, setBreathStage] = useState('') // начальная фаза дыхания
+	const [breathStage, setBreathStage] = useState('')
 	const [restId, setRestId] = useState(null)
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
-	const [warnings, setWarnings] = useState([]) // Массив для предупреждений
+	const [warnings, setWarnings] = useState([])
 
 	const addWarning = (message) => {
 		setWarnings((prevWarnings) => [
 			...prevWarnings,
-			{ message, id: Date.now() }, // ID для уникальности каждого предупреждения
+			{ message, id: Date.now() }, 
 		])
 	}
+
+	
+	//!мышь
+	const handleMouseDown = () => {
+		setIsSetStarted(true)
+		setIsPressed(true)
+		startTimer()
+	}
+	
+	const handleMouseUp = () => {
+		setIsPressed(false)
+		stopMeditation()
+		
+		if (pressDuration >= 5) {
+			const calculatedRestDuration = Math.floor(pressDuration * 1.5)
+			const cappedRestDuration = Math.min(calculatedRestDuration, 60)
+			setRestDuration(cappedRestDuration)
+			setIsResting(true)
+			startRestTimer()
+			startMeditation()
+		}
+
+		if (isPressed) {
+			stopTimer()
+		}
+	}
+	
+	const handleMouseLeave = () => {
+		if (pressDuration >= 5) {
+			handleMouseUp()
+		}
+	}
+	
+	//!медитация
 
 	useEffect(() => {
 		if (!isResting) {
@@ -34,47 +68,13 @@ function App() {
 		}
 	}, [isResting])
 
-	//!мышь
-	const handleMouseDown = () => {
-		setIsSetStarted(true)
-		setIsPressed(true)
-		startTimer()
-	}
-
-	const handleMouseUp = () => {
-		setIsPressed(false)
-		stopMeditation()
-
-		if (pressDuration >= 5) {
-			const calculatedRestDuration = Math.floor(pressDuration * 1.5)
-			const cappedRestDuration = Math.min(calculatedRestDuration, 60)
-			setRestDuration(cappedRestDuration)
-			setIsResting(true)
-			startRestTimer()
-			startMeditation() // Начать медитацию после 5 секунд
-		}
-
-		if (isPressed) {
-			stopTimer()
-		}
-	}
-
-	const handleMouseLeave = () => {
-		if (pressDuration >= 5) {
-			handleMouseUp()
-		}
-	}
-
-	//!медитация
 	const startMeditation = () => {
-		let stage = 'Inhale' // Начинаем всегда с "Inhale"
+		let stage = 'Inhale'
 		let counter = 0
 		setBreathStage('Inhale')
 
-		// Hold начала отсчета (пока не прошло 5 секунд)
 		const id = setInterval(() => {
 			if (pressDuration >= 5) {
-				// Проверяем, что прошло 5 секунд
 				counter++
 				if (stage === 'Inhale' && counter === 4) {
 					setBreathStage('Hold')
@@ -96,11 +96,10 @@ function App() {
 	}
 
 	useEffect(() => {
-		// Убедитесь, что медитация начинается только после 5 секунд
 		if (pressDuration >= 5 && !timerId) {
 			startMeditation()
 		}
-	}, [pressDuration]) // Используем pressDuration для старта медитации
+	}, [pressDuration])
 
 	const stopMeditation = () => {
 		if (timerId) {
@@ -111,6 +110,7 @@ function App() {
 	}
 
 	//!таймер
+	
 	const startTimer = () => {
 		setPressDuration(0)
 		const id = setInterval(() => {
@@ -189,9 +189,6 @@ function App() {
 				isSetFinished={isSetFinished}
 				currentCount={currentCount}
 			/>
-			{/* <Countdown restDuration={restDuration} pressDuration={pressDuration}>
-				{isResting ? restDuration : pressDuration}
-			</Countdown> */}
 			{currentCount === 14 && (
 				<Warning
 					currentCount={currentCount}

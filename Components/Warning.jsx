@@ -11,6 +11,10 @@ function Warning(props) {
 		}
 	}, [props.isWarningShowing, props.setIsWarningShowing])
 
+	useEffect(() => {
+		props.currentCount === 1 && props.setIsWarningShowing(false)
+	}, [props.currentCount])
+
 	const handleTouchStart = (e) => {
 		e.preventDefault()
 		props.setIsWarningShowing(false)
@@ -26,7 +30,9 @@ function Warning(props) {
 				absolute top-[20px] left-[20px] right-[20px]  
         ${props.isWarningShowing ? ' translate-y-0 ' : ' translate-y-[-200%] '} 
         ${
-					props.message === 'Сет завершен!' ? ' bg-[#74BA89] ' : ' bg-[#E0C477] '
+					props.message === 'Сет завершен!'
+						? ' bg-[#74BA89] '
+						: ' bg-[#E0C477] '
 				} `}
 		>
 			<H1 className=' text-white '>{props.message}</H1>

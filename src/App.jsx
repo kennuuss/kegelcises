@@ -19,27 +19,26 @@ function App() {
 	const [restId, setRestId] = useState(null)
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
-	const [warnings, setWarnings] = useState([])
+	/* const [warnings, setWarnings] = useState([])
 
 	const addWarning = (message) => {
 		setWarnings((prevWarnings) => [
 			...prevWarnings,
-			{ message, id: Date.now() }, 
+			{ message, id: Date.now() },
 		])
-	}
+	} */
 
-	
 	//!мышь
 	const handleMouseDown = () => {
 		setIsSetStarted(true)
 		setIsPressed(true)
 		startTimer()
 	}
-	
+
 	const handleMouseUp = () => {
 		setIsPressed(false)
 		stopMeditation()
-		
+
 		if (pressDuration >= 5) {
 			const calculatedRestDuration = Math.floor(pressDuration * 1.5)
 			const cappedRestDuration = Math.min(calculatedRestDuration, 60)
@@ -53,13 +52,13 @@ function App() {
 			stopTimer()
 		}
 	}
-	
+
 	const handleMouseLeave = () => {
 		if (pressDuration >= 5) {
 			handleMouseUp()
 		}
 	}
-	
+
 	//!медитация
 
 	useEffect(() => {
@@ -110,7 +109,7 @@ function App() {
 	}
 
 	//!таймер
-	
+
 	const startTimer = () => {
 		setPressDuration(0)
 		const id = setInterval(() => {
@@ -189,7 +188,13 @@ function App() {
 				isSetFinished={isSetFinished}
 				currentCount={currentCount}
 			/>
-			{currentCount === 14 && (
+			<Warning
+				currentCount={currentCount}
+				isWarningShowing={isWarningShowing}
+				setIsWarningShowing={setIsWarningShowing}
+				message='Set is over!'
+			/>
+			{/* {currentCount === 14 && (
 				<Warning
 					currentCount={currentCount}
 					isWarningShowing={isWarningShowing}
@@ -204,7 +209,7 @@ function App() {
 					setIsWarningShowing={setIsWarningShowing}
 					message='Set is over!'
 				/>
-			)}
+			)} */}
 		</main>
 	)
 }

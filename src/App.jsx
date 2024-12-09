@@ -158,7 +158,7 @@ function App() {
 	}, [intervalId, restId])
 
 	return (
-		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-[6vh] h-[100vh]'>
+		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-4 h-[100vh]'>
 			<RepCount
 				setIsSetStarted={setIsSetStarted}
 				setIsSetFinished={setIsSetFinished}
@@ -176,20 +176,21 @@ function App() {
 					: isSetStarted
 					? 'pass'
 					: isSetFinished
-					? `Nice job!`
-					: 'pass'}
+					? 'pass' /* `Nice job!` */
+					: 'Tap to start! '}
 			</H1>
 			<KegelsButton
 				handleMouseDown={handleMouseDown}
 				handleMouseLeave={handleMouseLeave}
 				handleMouseUp={handleMouseUp}
 				pressDuration={pressDuration}
+				restDuration={restDuration}
 				isResting={isResting}
 				isSetFinished={isSetFinished}
 			/>
-			<Countdown restDuration={restDuration} pressDuration={pressDuration}>
+			{/* <Countdown restDuration={restDuration} pressDuration={pressDuration}>
 				{isResting ? restDuration : pressDuration}
-			</Countdown>
+			</Countdown> */}
 			{currentCount === 14 && (
 				<Warning
 					currentCount={currentCount}

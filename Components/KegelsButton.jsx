@@ -1,4 +1,5 @@
 import React from 'react'
+import Countdown from './Countdown'
 
 function KegelsButton(props) {
 	return (
@@ -23,10 +24,8 @@ function KegelsButton(props) {
 				}`}
 		>
 			<div
-				className={`transform transition-all duration-150 rounded-full w-[244px] h-[244px] ${
-					props.isResting
-						? ' dark:bg-[#180048] bg-[#4E1CB4] '
-						: ' bg-[#9B69FF] dark:bg-[#4C0AD0] '
+				className={`transform flex justify-center items-center transition-all duration-150 rounded-full w-[244px] h-[244px] ${
+					props.isResting ? ' bg-[#4E1CB4] ' : ' bg-[#9B69FF]  '
 				} 
 					scale-[${
 						props.pressDuration === 0
@@ -39,7 +38,12 @@ function KegelsButton(props) {
 							? ' scale-[0.70] '
 							: ' scale-[0.70] '
 					}]`}
-			/>
+			>
+				{' '}
+				<Countdown restDuration={props.restDuration} pressDuration={props.pressDuration}>
+					{props.isResting ? props.restDuration : props.pressDuration}
+				</Countdown>
+			</div>
 		</button>
 	)
 }

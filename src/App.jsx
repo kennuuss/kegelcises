@@ -28,7 +28,6 @@ function App() {
 		])
 	}
 
-
 	useEffect(() => {
 		if (!isResting) {
 			stopMeditation()
@@ -68,25 +67,26 @@ function App() {
 
 	//!медитация
 	const startMeditation = () => {
-		let stage = 'Вдох' // Начинаем всегда с "Вдох"
+		let stage = 'Inhale' // Начинаем всегда с "Inhale"
 		let counter = 0
-		setBreathStage('Вдох')
+		setBreathStage('Inhale')
 
-		// Задержка начала отсчета (пока не прошло 5 секунд)
+		// Hold начала отсчета (пока не прошло 5 секунд)
 		const id = setInterval(() => {
-			if (pressDuration >= 5) { // Проверяем, что прошло 5 секунд
+			if (pressDuration >= 5) {
+				// Проверяем, что прошло 5 секунд
 				counter++
-				if (stage === 'Вдох' && counter === 4) {
-					setBreathStage('Задержка')
-					stage = 'Задержка'
+				if (stage === 'Inhale' && counter === 4) {
+					setBreathStage('Hold')
+					stage = 'Hold'
 					counter = 0
-				} else if (stage === 'Задержка' && counter === 2) {
-					setBreathStage('Выдох')
-					stage = 'Выдох'
+				} else if (stage === 'Hold' && counter === 2) {
+					setBreathStage('Exhale')
+					stage = 'Exhale'
 					counter = 0
-				} else if (stage === 'Выдох' && counter === 8) {
-					setBreathStage('Вдох')
-					stage = 'Вдох'
+				} else if (stage === 'Exhale' && counter === 8) {
+					setBreathStage('Inhale')
+					stage = 'Inhale'
 					counter = 0
 				}
 			}
@@ -158,7 +158,7 @@ function App() {
 	}, [intervalId, restId])
 
 	return (
-		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-0 py-[12vh] gap-[6vh] h-[100vh]'>
+		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-[6vh] h-[100vh]'>
 			<RepCount
 				setIsSetStarted={setIsSetStarted}
 				setIsSetFinished={setIsSetFinished}
@@ -170,14 +170,14 @@ function App() {
 				{isPressed
 					? pressDuration >= 5
 						? breathStage
-						: ''
+						: 'pass'
 					: isResting
-					? 'Отдых'
+					? 'Rest'
 					: isSetStarted
-					? ''
+					? 'pass'
 					: isSetFinished
-					? `Молодец!`
-					: ''}
+					? `Nice job!`
+					: 'pass'}
 			</H1>
 			<KegelsButton
 				handleMouseDown={handleMouseDown}
@@ -195,7 +195,7 @@ function App() {
 					currentCount={currentCount}
 					isWarningShowing={isWarningShowing}
 					setIsWarningShowing={setIsWarningShowing}
-					message='Последнее повторение!'
+					message='Last rep!'
 				/>
 			)}
 			{currentCount === 15 && (
@@ -203,7 +203,7 @@ function App() {
 					currentCount={currentCount}
 					isWarningShowing={isWarningShowing}
 					setIsWarningShowing={setIsWarningShowing}
-					message='Сет завершен!'
+					message='Set is over!'
 				/>
 			)}
 		</main>

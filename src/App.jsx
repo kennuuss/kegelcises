@@ -187,6 +187,7 @@ function App() {
 				restDuration={restDuration}
 				isResting={isResting}
 				isSetFinished={isSetFinished}
+				currentCount={currentCount}
 			/>
 			{/* <Countdown restDuration={restDuration} pressDuration={pressDuration}>
 				{isResting ? restDuration : pressDuration}

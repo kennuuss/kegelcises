@@ -43,14 +43,6 @@ This project leverages modern web development tools to provide a seamless user e
 
 ---
 
-## 🚧 What's Next?
-
-- **Progress Tracking**: Allow users to monitor their improvement over time.
-- **Personalized Plans**: Introduce custom routines tailored to individual needs.
-- **Language Support**: Expand accessibility with multi-language support.
-
----
-
 ## 💡 Contributing
 
 This project is open-source, and contributions are welcome! Feel free to fork the repository, suggest new features, or report issues.  

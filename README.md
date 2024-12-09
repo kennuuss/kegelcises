@@ -39,7 +39,7 @@ This project leverages modern web development tools to provide a seamless user e
 
 ## 🏗️ Development Status  
 
-**Kegelcises** is currently in the **development phase**. The current version is a **prototype**, and we’re actively refining features and incorporating feedback to make it even better. Stay tuned for updates and new functionalities!
+**Kegelcises** is currently in the **development phase**. The current version is a **prototype**, and i am actively refining features and incorporating feedback to make it even better. Stay tuned for updates and new functionalities!
 
 ---
 

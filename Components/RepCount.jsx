@@ -20,7 +20,7 @@ function RepCount(props) {
 			>
 				{props.currentCount > 14 ? SVG.SVGRestart : SVG.SVGTrashBin}
 			</button>
-			<div className='text-[rgb(124,124,124)] dark:text-white text-[24px]'>
+			<div className='text-[rgb(124,124,124)] dark:text-white text-[24px] w-[74.25px] flex justify-center lg:justify-end'>
 				{props.currentCount} / 15
 			</div>
 		</div>

@@ -8,22 +8,13 @@ module.exports = {
 	],
 	theme: {
 		extend: {
-			/* animation: {
-				pulse: 'pulseSize 1s ease-in-out infinite',
-			},
-			keyframes: {
-				pulse: {
-					'0%, 100%': { transform: 'scale(1)' },
-					'50%': { transform: 'scale(0.95)' },
-				},
-			}, */
 		},
 		screens: {
-			sm: '640px', // Мобильные устройства
-			md: '768px', // Плашеты
-			lg: '1024px', // Ноутбуки
-			xl: '1280px', // Десктопы
-			'2xl': '1536px', // Большие экраны
+			sm: '640px',
+			md: '768px',
+			lg: '1024px',
+			xl: '1280px',
+			'2xl': '1536px',
 		},
 	},
 	plugins: [],

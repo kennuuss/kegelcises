@@ -6,7 +6,6 @@ function Warning(props) {
 	const [isSecondWarningShowing, setIsSecondWarningShowing] = useState(false)
 
 	useEffect(() => {
-		// Скрыть предупреждения после определенного времени
 		if (isFirstWarningShowing || isSecondWarningShowing) {
 			const timer = setTimeout(() => {
 				setIsFirstWarningShowing(false)
@@ -17,7 +16,6 @@ function Warning(props) {
 	}, [isFirstWarningShowing, isSecondWarningShowing])
 
 	useEffect(() => {
-		// Обновление состояния на основании currentCount
 		if (props.currentCount === 1) {
 			setIsFirstWarningShowing(false)
 			setIsSecondWarningShowing(false)
@@ -37,7 +35,6 @@ function Warning(props) {
 
 	return (
 		<>
-			{/* Первое окно */}
 			<button
 				onClick={() => setIsFirstWarningShowing(false)}
 				onTouchStart={(e) => handleTouchStart(e)}
@@ -51,7 +48,6 @@ function Warning(props) {
 				<H1 className='text-white'>Последнее повторение!</H1>
 			</button>
 
-			{/* Второе окно */}
 			<button
 				onClick={() => setIsSecondWarningShowing(false)}
 				onTouchStart={(e) => handleTouchStart(e)}

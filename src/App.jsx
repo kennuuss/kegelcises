@@ -19,14 +19,6 @@ function App() {
 	const [restId, setRestId] = useState(null)
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
-	/* const [warnings, setWarnings] = useState([])
-
-	const addWarning = (message) => {
-		setWarnings((prevWarnings) => [
-			...prevWarnings,
-			{ message, id: Date.now() },
-		])
-	} */
 
 	//!мышь
 	const handleMouseDown = () => {
@@ -193,22 +185,6 @@ function App() {
 				isWarningShowing={isWarningShowing}
 				setIsWarningShowing={setIsWarningShowing}
 			/>
-			{/* {currentCount === 14 && (
-				<Warning
-					currentCount={currentCount}
-					isWarningShowing={isWarningShowing}
-					setIsWarningShowing={setIsWarningShowing}
-					message='Last rep!'
-				/>
-			)}
-			{currentCount === 15 && (
-				<Warning
-					currentCount={currentCount}
-					isWarningShowing={isWarningShowing}
-					setIsWarningShowing={setIsWarningShowing}
-					message='Set is over!'
-				/>
-			)} */}
 		</main>
 	)
 }

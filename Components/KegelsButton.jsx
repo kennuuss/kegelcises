@@ -17,16 +17,18 @@ function KegelsButton(props) {
 			onTouchCancel={(e) => {
 				e.preventDefault(), props.handleMouseLeave()
 			}}
-			className={`w-[350px] h-[350px] flex hover:scale-105 transition-all duration-150 lg:active:scale-110 justify-center items-center 
-				`} /* ${
-					props.isResting || props.isSetFinished
-						? ' pointer-events-none cursor-not-allowed '
-						: ''
-				} */
+			className={`${
+				props.isResting && ' pointer-events-none cursor-not-allowed '
+			} w-[350px] h-[350px] flex hover:scale-105 transition-all duration-150 lg:active:scale-110 justify-center items-center 
+				`}
 		>
 			<span
 				className={`transform flex justify-center items-center transition-all duration-150 rounded-full w-[244px] h-[244px] ${
-					props.isResting || props.isSetFinished
+					props.pressDuration > 0
+						? ' bg-[#E0C477] '
+						: props.isResting
+						? ' bg-[#498C5D] '
+						: props.isResting || props.isSetFinished
 						? ' bg-[#4E1CB4] '
 						: ' bg-[#9B69FF]  '
 				} 
@@ -43,7 +45,9 @@ function KegelsButton(props) {
 					}]`}
 			>
 				<span
-					className={` text-white flex justify-center items-center ${!props.isSetFinished && ' hidden '}`}
+					className={` text-white flex justify-center items-center ${
+						!props.isSetFinished && ' hidden '
+					}`}
 				>
 					{SVG.SVGRestart}
 				</span>{' '}

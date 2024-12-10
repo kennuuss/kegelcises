@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import H1 from '../Components/H1'
 import KegelsButton from './../Components/KegelsButton'
 import RepCount from './../Components/RepCount'
-import Countdown from './../Components/Countdown'
 import Warning from '../Components/Warning'
 
 function App() {
@@ -19,6 +18,13 @@ function App() {
 	const [restId, setRestId] = useState(null)
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
+
+	const eraceCount = () => {
+		setCount(1)
+		setRestDuration(0)
+		setIsSetStarted(true)
+		setIsSetFinished(false)
+	}
 
 	//!мышь
 	const handleMouseDown = () => {
@@ -151,6 +157,7 @@ function App() {
 	return (
 		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-4 h-[100vh]'>
 			<RepCount
+				eraceCount={eraceCount}
 				setIsSetStarted={setIsSetStarted}
 				setIsSetFinished={setIsSetFinished}
 				setRestDuration={setRestDuration}
@@ -179,6 +186,7 @@ function App() {
 				isResting={isResting}
 				isSetFinished={isSetFinished}
 				currentCount={currentCount}
+				eraceCount={eraceCount}
 			/>
 			<Warning
 				currentCount={currentCount}

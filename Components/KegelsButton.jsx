@@ -43,7 +43,7 @@ function KegelsButton(props) {
 					}]`}
 			>
 				<span
-					className={` text-white ${!props.isSetFinished && ' opacity-0 '}`}
+					className={` text-white flex justify-center items-center ${!props.isSetFinished && ' hidden '}`}
 				>
 					{SVG.SVGRestart}
 				</span>{' '}

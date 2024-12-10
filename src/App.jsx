@@ -19,6 +19,12 @@ function App() {
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
 
+/* 	const sets = [[const setDuration = '', allReps=[]]]
+ */
+	useEffect(() => {
+		
+	}, [isSetStarted])
+
 	const eraceCount = () => {
 		setCount(1)
 		setRestDuration(0)

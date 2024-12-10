@@ -28,9 +28,11 @@ function App() {
 
 	//!мышь
 	const handleMouseDown = () => {
-		setIsSetStarted(true)
-		setIsPressed(true)
-		startTimer()
+		isSetFinished ? eraceCount() : (
+			setIsSetStarted(true),
+			setIsPressed(true),
+			startTimer()
+		)
 	}
 
 	const handleMouseUp = () => {
@@ -172,7 +174,7 @@ function App() {
 					: isResting
 					? 'Rest'
 					: isSetStarted
-					? 'pass'
+					? 'Tap to continue!'
 					: isSetFinished
 					? 'pass' /* `Nice job!` */
 					: 'Tap to start! '}

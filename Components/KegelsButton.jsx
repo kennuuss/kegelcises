@@ -27,7 +27,7 @@ function KegelsButton(props) {
 					props.pressDuration > 0
 						? ' bg-[#E0C477] '
 						: props.isResting
-						? ' bg-[#498C5D] '
+						? ' bg-[#498C5D] ' /* этот цвет спецом немного темнее чем исходный цвет что бы обозначить недоступность кнопки во время отдыха. Вот исходный цвет: #74BA89 :) люблю тебя */
 						: props.isResting || props.isSetFinished
 						? ' bg-[#4E1CB4] '
 						: ' bg-[#9B69FF]  '

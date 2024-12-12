@@ -1,12 +1,12 @@
 import React from 'react'
 import KegelsButton from '../Components/KegelsButton'
-import H1 from '../Components/H1'
+import {H1} from '../Components/Text'
 import RepCount from '../Components/RepCount'
 import Warning from '../Components/Warning'
 
 function ButtonContainer(props) {
   return (
-    <div className=''>
+    <div className='h-screen'>
       <KegelsButton
         handleMouseDown={props.handleMouseDown}
         handleMouseLeave={props.handleMouseLeave}

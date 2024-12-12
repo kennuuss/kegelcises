@@ -1,14 +1,13 @@
 import React from 'react'
 
-export function P({ props, children }) {
-	return <p className={`text-[24px] ${className}`}>{children}</p>
+export function P({ className, children }) {
+	return <p className={`text-[24px] dark:text-white ${className}`}>{children}</p>
 }
 
-//! Стадия медитации 
-function H1(props) {
+export function H1(props) {
 	return (
 		<h1
-			className={`text-[36px] text-center dark:text-white h-min ${
+			className={`text-[56px] font-bold select-none text-center dark:text-white h-min ${
 				props.className
 			} ${props.children === 'pass' && ' opacity-0 pointer-events-none '}`}
 		>
@@ -17,25 +16,16 @@ function H1(props) {
 	)
 }
 
-//! Какой это сет по счету (в подсчете итогов), предупреждение в конце сета 
-export function H2({ className, children }) {
-	return <p className={`text-[24px] text-white ${className}`}>{children}</p>
-}
-
-//! Длительность подхода,  
-
-/* function H3(props) {
+export function H2(props) {
 	return (
-		<h3
-			className={
-				pressDuration > 0 || restDuration >= 1
-					? 'text-[58px] mx-auto select-non dark:text-white pointer-events-none'
-					: 'opacity-0 text-[58px] mx-auto select-none pointer-events-none'
-			}
+		<h2
+			className={`text-[36px] text-white font-bold select-none text-center  h-min ${
+				props.className
+			} ${props.children === 'pass' && ' opacity-0 pointer-events-none '}`}
 		>
-			{children}
-		</h3>
+			{props.children}
+		</h2>
 	)
 }
- */
+
 export default Text

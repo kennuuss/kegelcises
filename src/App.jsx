@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import H1 from '../Components/H1'
-import { H2 } from '../Components/Text'
-import KegelsButton from './../Components/KegelsButton'
-import RepCount from './../Components/RepCount'
-import Warning from '../Components/Warning'
 import SetStatsPage from '../Containers/SetStatsPage'
 import ButtonContainer from '../Containers/ButtonContainer'
-
-
 
 function App() {
 	//!хуки
@@ -24,20 +17,27 @@ function App() {
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
 
-	/* 	const sets = [[const setDuration = '', allReps=[]]]
-	 */
-
-	/* const [sets, setSets] = useState({
-		id: 0,
-		setDuration: 0,
-		reps: [{ id: 0, repType: null, repDuration: 0 }],
-	}) */
-
 	const sets = [
 		{
-			id: 0,
-			setDuration: 0,
-			reps: [{ id: 0, repType: null, repDuration: 0 }],
+			id: 1,
+			setDuration: '0:46',
+			reps: [
+				{ id: 0, repType: 'Hold', repDuration: '0:12' },
+				{ id: 1, repType: 'Rest', repDuration: '0:24' },
+				{ id: 2, repType: 'Tap', repDuration: '0' },
+				{ id: 3, repType: 'Tap', repDuration: '0' },
+				{ id: 4, repType: 'Tap', repDuration: '0' },
+				{ id: 5, repType: 'Hold', repDuration: '0' },
+				{ id: 6, repType: 'Rest', repDuration: '0' },
+				{ id: 7, repType: 'Hold', repDuration: '0' },
+				{ id: 8, repType: 'Rest', repDuration: '0' },
+				{ id: 9, repType: 'Tap', repDuration: '0' },
+				{ id: 10, repType: 'Tap', repDuration: '0' },
+				{ id: 11, repType: 'Tap', repDuration: '0' },
+				{ id: 12, repType: 'Hold', repDuration: '0' },
+				{ id: 13, repType: 'Rest', repDuration: '0' },
+				{ id: 14, repType: 'Rest', repDuration: '0' }
+			],
 		},
 	]
 
@@ -200,7 +200,10 @@ function App() {
 				handleMouseUp={handleMouseUp}
 				handleMouseLeave={handleMouseLeave}
 			/>
-			{sets.length > 0 && <SetStatsPage sets={sets} />}
+			{sets.length > 0 &&
+				sets.map((set) => {
+					return <SetStatsPage set={set} key={set.id} />
+				})}
 		</main>
 	)
 }

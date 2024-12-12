@@ -1,5 +1,34 @@
 import React from 'react'
 
+export const SVGRepLine = (
+	<svg
+		xmlns='http://www.w3.org/2000/svg'
+		width='114'
+		height='2'
+		viewBox='0 0 114 2'
+		fill='none'
+	>
+		<path
+			d='M1 1H113'
+			stroke='#989898'
+			stroke-width='2'
+			stroke-linecap='round'
+		/>
+	</svg>
+)
+
+export const SVGTapEllipse = (
+	<svg
+		xmlns='http://www.w3.org/2000/svg'
+		width='13'
+		height='12'
+		viewBox='0 0 13 12'
+		fill='none'
+	>
+		<circle cx='6.5' cy='6' r='6' fill='#9B69FF' />
+	</svg>
+)
+
 export const SVGTrashBin = (
 	<svg
 		xmlns='http://www.w3.org/2000/svg'

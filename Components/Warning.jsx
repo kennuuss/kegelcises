@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import H1 from './H1'
+import {H1} from './Text'
 
 function Warning(props) {
 	const [isFirstWarningShowing, setIsFirstWarningShowing] = useState(false)

@@ -55,7 +55,7 @@ function KegelsButton(props) {
             ? ' bg-[#E0C477] '
             : props.isResting
             ? ' bg-[#498C5D] '
-            : props.isResting || props.isSetFinished
+            : props.isResting /* || props.isSetFinished */
             ? ' bg-[#4E1CB4] '
             : ' bg-[#9B69FF]  '
         }`}

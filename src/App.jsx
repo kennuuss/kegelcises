@@ -19,11 +19,13 @@ function App() {
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
 
-/* 	const sets = [[const setDuration = '', allReps=[]]]
- */
-	useEffect(() => {
+	const [sets, setSets] = useState(
 		
-	}, [isSetStarted])
+	)
+
+	/* 	const sets = [[const setDuration = '', allReps=[]]]
+	 */
+	useEffect(() => {}, [isSetStarted])
 
 	const eraceCount = () => {
 		setCount(1)
@@ -34,11 +36,9 @@ function App() {
 
 	//!мышь
 	const handleMouseDown = () => {
-		isSetFinished ? eraceCount() : (
-			setIsSetStarted(true),
-			setIsPressed(true),
-			startTimer()
-		)
+		isSetFinished
+			? eraceCount()
+			: (setIsSetStarted(true), setIsPressed(true), startTimer())
 	}
 
 	const handleMouseUp = () => {
@@ -164,22 +164,22 @@ function App() {
 
 	return (
 		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-4 h-[100vh]'>
-				<KegelsButton
-					handleMouseDown={handleMouseDown}
-					handleMouseLeave={handleMouseLeave}
-					handleMouseUp={handleMouseUp}
-					pressDuration={pressDuration}
-					restDuration={restDuration}
-					isResting={isResting}
-					isSetFinished={isSetFinished}
-					currentCount={currentCount}
-					eraceCount={eraceCount}
-				/>
+			<KegelsButton
+				handleMouseDown={handleMouseDown}
+				handleMouseLeave={handleMouseLeave}
+				handleMouseUp={handleMouseUp}
+				pressDuration={pressDuration}
+				restDuration={restDuration}
+				isResting={isResting}
+				isSetFinished={isSetFinished}
+				currentCount={currentCount}
+				eraceCount={eraceCount}
+			/>
 			<H1>
 				{isPressed
 					? pressDuration >= 5
-					? breathStage
-					: 'pass'
+						? breathStage
+						: 'pass'
 					: isResting
 					? 'Rest'
 					: isSetStarted

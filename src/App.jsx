@@ -5,6 +5,9 @@ import KegelsButton from './../Components/KegelsButton'
 import RepCount from './../Components/RepCount'
 import Warning from '../Components/Warning'
 import SetStatsPage from '../Containers/SetStatsPage'
+import ButtonContainer from '../Containers/ButtonContainer'
+
+
 
 function App() {
 	//!хуки
@@ -177,44 +180,25 @@ function App() {
 
 	return (
 		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-4 min-h-[100vh]'>
-			<KegelsButton
-				handleMouseDown={handleMouseDown}
-				handleMouseLeave={handleMouseLeave}
-				handleMouseUp={handleMouseUp}
-				pressDuration={pressDuration}
-				restDuration={restDuration}
-				isResting={isResting}
-				isSetFinished={isSetFinished}
-				currentCount={currentCount}
-				eraceCount={eraceCount}
-			/>
-			<H1>
-				{isPressed
-					? pressDuration >= 5
-						? breathStage
-						: 'pass'
-					: isResting
-					? 'Rest'
-					: isSetStarted
-					? 'Tap to continue!'
-					: isSetFinished
-					? 'pass' /* `Nice job!` */
-					: 'Tap to start! '}
-			</H1>
-
-			{/* //! то, что находится не в порядке страницы: */}
-			<RepCount
-				eraceCount={eraceCount}
-				setIsSetStarted={setIsSetStarted}
-				setIsSetFinished={setIsSetFinished}
-				setRestDuration={setRestDuration}
+			<ButtonContainer
 				currentCount={currentCount}
 				setCount={setCount}
-			/>
-			<Warning
-				currentCount={currentCount}
+				pressDuration={pressDuration}
+				restDuration={restDuration}
+				setRestDuration={setRestDuration}
+				isResting={isResting}
+				isPressed={isPressed}
+				isSetStarted={isSetStarted}
+				setIsSetStarted={setIsSetStarted}
+				isSetFinished={isSetFinished}
+				setIsSetFinished={setIsSetFinished}
 				isWarningShowing={isWarningShowing}
 				setIsWarningShowing={setIsWarningShowing}
+				breathStage={breathStage}
+				eraceCount={eraceCount}
+				handleMouseDown={handleMouseDown}
+				handleMouseUp={handleMouseUp}
+				handleMouseLeave={handleMouseLeave}
 			/>
 			{sets.length > 0 && <SetStatsPage sets={sets} />}
 		</main>

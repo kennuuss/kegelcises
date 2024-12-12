@@ -6,7 +6,7 @@ import Warning from '../Components/Warning'
 
 function ButtonContainer(props) {
   return (
-    <div className='h-screen'>
+    <div className='h-screen flex items-center pb-40'>
       <KegelsButton
         handleMouseDown={props.handleMouseDown}
         handleMouseLeave={props.handleMouseLeave}
@@ -18,20 +18,7 @@ function ButtonContainer(props) {
         currentCount={props.currentCount}
         eraceCount={props.eraceCount}
       />
-      <H1>
-        {props.isPressed
-          ? props.pressDuration >= 5
-            ? props.breathStage
-            : 'pass'
-          : props.isResting
-          ? 'Rest'
-          : props.isSetStarted
-          ? 'Tap to continue!'
-          : props.isSetFinished
-          ? 'pass'
-          : /* `Nice job!` */
-            'Tap to start! '}
-      </H1>
+      
 
       {/* //! то, что находится не в порядке страницы: */}
       <RepCount

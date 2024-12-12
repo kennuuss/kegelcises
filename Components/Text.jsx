@@ -18,8 +18,8 @@ function H1(props) {
 }
 
 //! Какой это сет по счету (в подсчете итогов), предупреждение в конце сета 
-export function H2({ props, children }) {
-	return <p className={`text-[24px] ${className}`}>{children}</p>
+export function H2({ className, children }) {
+	return <p className={`text-[24px] text-white ${className}`}>{children}</p>
 }
 
 //! Длительность подхода,  

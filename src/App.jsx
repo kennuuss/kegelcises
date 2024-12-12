@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import H1 from '../Components/H1'
+import { H2 } from '../Components/Text'
 import KegelsButton from './../Components/KegelsButton'
 import RepCount from './../Components/RepCount'
 import Warning from '../Components/Warning'
+import SetStatsPage from '../Containers/SetStatsPage'
 
 function App() {
 	//!хуки
-	const [currentCount, setCount] = useState(1)
+	const [currentCount, setCount] = useState(/* 1 */ 14)
 	const [pressDuration, setPressDuration] = useState(0)
 	const [restDuration, setRestDuration] = useState(0)
 	const [isResting, setIsResting] = useState(false)
@@ -19,12 +21,23 @@ function App() {
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
 
-	const [sets, setSets] = useState(
-		
-	)
-
 	/* 	const sets = [[const setDuration = '', allReps=[]]]
 	 */
+
+	/* const [sets, setSets] = useState({
+		id: 0,
+		setDuration: 0,
+		reps: [{ id: 0, repType: null, repDuration: 0 }],
+	}) */
+
+	const sets = [
+		{
+			id: 0,
+			setDuration: 0,
+			reps: [{ id: 0, repType: null, repDuration: 0 }],
+		},
+	]
+
 	useEffect(() => {}, [isSetStarted])
 
 	const eraceCount = () => {
@@ -163,7 +176,7 @@ function App() {
 	}, [intervalId, restId])
 
 	return (
-		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-4 h-[100vh]'>
+		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-4 min-h-[100vh]'>
 			<KegelsButton
 				handleMouseDown={handleMouseDown}
 				handleMouseLeave={handleMouseLeave}
@@ -203,6 +216,7 @@ function App() {
 				isWarningShowing={isWarningShowing}
 				setIsWarningShowing={setIsWarningShowing}
 			/>
+			{sets.length > 0 && <SetStatsPage sets={sets} />}
 		</main>
 	)
 }

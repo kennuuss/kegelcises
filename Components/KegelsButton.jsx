@@ -82,12 +82,12 @@ function KegelsButton(props) {
             ? props.breathStage
             : 'pass'
           : props.isResting
-          ? 'Rest'
-          : props.isSetStarted
-          ? 'Tap to continue!'
-          : props.isSetFinished
-          ? 'pass'
-          : 'Tap to start!'}
+            ? 'Rest'
+            : props.isSetStarted
+              ? 'Tap to continue!'
+              : props.isSetFinished
+                ? 'pass'
+                : 'Click to start!'}
       </H1>
     </div>
   )

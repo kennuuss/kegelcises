@@ -8,12 +8,7 @@ export const SVGRepLine = (
 		viewBox='0 0 114 2'
 		fill='none'
 	>
-		<path
-			d='M1 1H113'
-			stroke='#989898'
-			stroke-width='2'
-			stroke-linecap='round'
-		/>
+		<path d='M1 1H113' stroke='#989898' strokeWidth='2' strokeLinecap='round' />
 	</svg>
 )
 

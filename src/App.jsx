@@ -4,7 +4,7 @@ import ButtonContainer from '../Containers/ButtonContainer'
 
 function App() {
 	//!хуки
-	const [currentCount, setCount] = useState(/* 1 */ 14)
+	const [currentCount, setCount] = useState(1)
 	const [pressDuration, setPressDuration] = useState(0)
 	const [restDuration, setRestDuration] = useState(0)
 	const [isResting, setIsResting] = useState(false)
@@ -17,6 +17,7 @@ function App() {
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
 	const [currentSet, setCurrentSet] = useState(1)
+	const [currentSetId, setCurrentSetId] = useState(0)
 
 	const sets = [
 		{
@@ -40,9 +41,41 @@ function App() {
 				{ id: 14, repType: 'Rest', repDuration: '0' },
 			],
 		},
+		{
+			id: 2,
+			setDuration: '0:46',
+			reps: [
+				{ id: 0, repType: 'Hold', repDuration: '0:12' },
+				{ id: 1, repType: 'Rest', repDuration: '0:24' },
+				{ id: 2, repType: 'Tap', repDuration: '0' },
+				{ id: 3, repType: 'Tap', repDuration: '0' },
+				{ id: 4, repType: 'Tap', repDuration: '0' },
+				{ id: 5, repType: 'Hold', repDuration: '0' },
+				{ id: 6, repType: 'Rest', repDuration: '0' },
+				{ id: 7, repType: 'Hold', repDuration: '0' },
+				{ id: 8, repType: 'Rest', repDuration: '0' },
+				{ id: 9, repType: 'Tap', repDuration: '0' },
+				{ id: 10, repType: 'Tap', repDuration: '0' },
+				{ id: 11, repType: 'Tap', repDuration: '0' },
+				{ id: 12, repType: 'Hold', repDuration: '0' },
+				{ id: 13, repType: 'Rest', repDuration: '0' },
+			],
+		},
 	]
 
-	useEffect(() => {}, [isSetStarted])
+	useEffect(() => {
+		const startSetTimer = () => {
+			setCurrentSetId(0)
+			const id = setInterval(() => {
+				setCurrentSetId((prev) => prev + 1)
+			}, 1000)
+			setIntervalId(id)
+		}
+	}, [isSetStarted, !isSetFinished])
+
+	useEffect(() => {
+		setCurrentSetId(currentSetId)
+	}, [isSetFinished])
 
 	const eraceCount = () => {
 		setCount(1)
@@ -183,6 +216,11 @@ function App() {
 		if (currentCount === 14) {
 			setIsSetFinished(true)
 			setCurrentSet(currentSet + 1)
+			sets.push({
+				id: currentSet,
+				setDuration: currentSetId,
+				reps: [],
+			})
 			setIsSetStarted(false)
 		}
 
@@ -196,7 +234,7 @@ function App() {
 				: '',
 		}
 
-		sets[currentSet].reps.push(newRepInfo) /* sets.currentSet-1.reps */
+		sets[currentSet].reps.push(newRepInfo)
 
 		currentCount === 13 && setIsWarningShowing(true)
 	}
@@ -209,7 +247,7 @@ function App() {
 	}, [intervalId, restId])
 
 	return (
-		<main className='bg-white overflow-hidden dark:bg-black flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-4 min-h-[100vh]'>
+		<main className='bg-white overflow-hidden dark:bg-[#0D0126] flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-4 min-h-[100vh]'>
 			<ButtonContainer
 				currentCount={currentCount}
 				setCount={setCount}
@@ -230,7 +268,7 @@ function App() {
 				handleMouseUp={handleMouseUp}
 				handleMouseLeave={handleMouseLeave}
 			/>
-			{sets.length > 0 &&
+			{sets[currentSet - 1].reps.length === 15 &&
 				sets.map((set) => {
 					return <SetStatsPage set={set} key={set.id} />
 				})}

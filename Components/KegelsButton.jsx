@@ -53,11 +53,9 @@ function KegelsButton(props) {
         <span
           className={`transform flex justify-center items-center transition-all duration-150 rounded-full w-[244px] h-[244px] ${
             props.pressDuration > 0
-              ? 'bg-[#E0C477]'
+              ? 'bg-[#601CE9]'
               : props.isResting
-              ? 'bg-[#498C5D]'
-              : props.isResting
-              ? 'bg-[#4E1CB4]'
+              ? 'bg-[#3A1487]'
               : 'bg-[#9B69FF]'
           }`}
         >

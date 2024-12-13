@@ -22,11 +22,11 @@ function SetStatsPage({ set }) {
 
 	return (
 		<div className='h-screen w-screen flex flex-col items-center '>
-			<H1>{set.id} set</H1>
+			<H1 className=' mt-[72px] mb-[72px] '>{set.id} set</H1>
 			<div className='flex lg:gap-[82px] items-center'>
-				<div className='flex flex-col lg:w-[30vw]'>
+				<div className='flex flex-col lg:w-[30vw] gap-[48px]'>
 					{setStatsPoints.map((point, index) => (
-						<div key={index} className='flex flex-col'>
+						<div key={index} className='flex flex-col hover:opacity-65 transition-all duration-200'>
 							<H2
 								className={`text-right font-black dark:text-[#${point.color}] `}
 							>
@@ -42,20 +42,26 @@ function SetStatsPage({ set }) {
 				</div>
 				<ul className='flex gap-[12px] flex-col lg:w-[30vw]'>
 					{set.reps.map((rep, index) => (
-						<li key={index} className='flex gap-[35px] items-center'>
+						<li
+							key={index}
+							className='flex gap-[35px] items-center hover:translate-y-[-3px] active:translate-y-[-5px] transition-all duration-100 cursor-pointer'
+						>
 							<span
-								className={`min-w-[32px] min-h-[32px] rounded-[6px] bg-[${
+								className={`min-w-[32px] select-none min-h-[32px] rounded-[6px] bg-[${
 									rep.repType === 'Tap'
 										? '#9B69FF'
 										: rep.repType === 'Rest'
-										? '#74BA89'
-										: rep.repType === 'Hold'
-										&& '#F4C43F'
+										? '#3A1487'
+										: rep.repType === 'Hold' && '#601CE9'
 								}]`}
 							/>
-							<P className={' min-w-[55px] text-center '}>{rep.repType}</P>
+							<P className={' min-w-[55px] text-center select-none '}>{rep.repType}</P>
 							<span>{SVG.SVGRepLine}</span>
-							<P className={' text-center justify-center flex min-w-[30px] '}>
+							<P
+								className={
+									' text-center select-none justify-center flex min-w-[30px] '
+								}
+							>
 								{rep.repType === 'Tap' ? SVG.SVGTapEllipse : rep.repDuration}
 							</P>
 						</li>

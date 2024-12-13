@@ -16,6 +16,7 @@ function App() {
 	const [restId, setRestId] = useState(null)
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
+	const [currentSet, setCurrentSet] = useState(1)
 
 	const sets = [
 		{
@@ -36,7 +37,7 @@ function App() {
 				{ id: 11, repType: 'Tap', repDuration: '0' },
 				{ id: 12, repType: 'Hold', repDuration: '0' },
 				{ id: 13, repType: 'Rest', repDuration: '0' },
-				{ id: 14, repType: 'Rest', repDuration: '0' }
+				{ id: 14, repType: 'Rest', repDuration: '0' },
 			],
 		},
 	]
@@ -154,6 +155,22 @@ function App() {
 		setRestId(id)
 	}
 
+	function formatTime(seconds) {
+		// Проверка, чтобы секунды были неотрицательными
+		if (seconds < 0) return '0:00'
+
+		// Вычисление минут и оставшихся секунд
+		const minutes = Math.floor(seconds / 60)
+		const remainingSeconds = seconds % 60
+
+		// Форматирование, чтобы секунды всегда были двухзначными
+		const formattedSeconds =
+			remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds
+
+		// Возвращение в формате минуты:секунды
+		return `${minutes}:${formattedSeconds}`
+	}
+
 	const stopTimer = () => {
 		clearInterval(intervalId)
 		setIsPressed(false)
@@ -165,8 +182,21 @@ function App() {
 
 		if (currentCount === 14) {
 			setIsSetFinished(true)
+			setCurrentSet(currentSet + 1)
 			setIsSetStarted(false)
 		}
+
+		const newRepInfo = {
+			id: sets.reps.length + 1,
+			repType: isResting ? 'Rest' : pressDuration >= 5 ? 'Hold' : 'Tap',
+			repDuration: isResting
+				? formatTime(restId)
+				: pressDuration >= 5
+				? formatTime(pressDuration)
+				: '',
+		}
+
+		sets[currentSet].reps.push(newRepInfo) /* sets.currentSet-1.reps */
 
 		currentCount === 13 && setIsWarningShowing(true)
 	}

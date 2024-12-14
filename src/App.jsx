@@ -247,7 +247,7 @@ function App() {
 	}, [intervalId, restId])
 
 	return (
-		<main className='bg-white overflow-hidden dark:bg-[#0D0126] flex flex-col justify-center items-center lg:py-8 py-[12vh] gap-4 min-h-[100vh]'>
+		<main className='bg-white overflow-hidden dark:bg-[#0D0126] flex flex-col justify-center items-center  gap-4 min-h-[100vh]'>
 			<ButtonContainer
 				currentCount={currentCount}
 				setCount={setCount}

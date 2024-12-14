@@ -7,7 +7,7 @@ export function P({ className, children }) {
 export function H1(props) {
 	return (
 		<h1
-			className={`text-[56px] font-bold select-none text-center dark:text-white h-min ${
+			className={`text-[56px] font-normal select-none text-center dark:text-white h-min ${
 				props.className
 			} ${props.children === 'pass' && ' opacity-0 pointer-events-none '}`}
 		>

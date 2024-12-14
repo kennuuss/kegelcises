@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import SetStatsPage from '../Containers/SetStatsPage'
 import ButtonContainer from '../Containers/ButtonContainer'
+import SetStatsList from '../Components/SetStatsList'
 
 function App() {
 	//!хуки
@@ -64,11 +64,11 @@ function App() {
 		setIsSetStarted(true)
 		setIsSetFinished(false)
 
-		if (restId) {
+		/* if (restId) {
 			clearInterval(restId)
 			setRestId(null)
 			setRestDuration(0)
-		}
+		} */
 	}
 
 	//!мышь
@@ -275,10 +275,7 @@ function App() {
 				handleMouseUp={handleMouseUp}
 				handleMouseLeave={handleMouseLeave}
 			/>
-			{sets[currentSet - 1].reps.length === 15 &&
-				sets.map((set) => {
-					return <SetStatsPage ref={set.ref} set={set} key={set.id} />
-				})}
+			<SetStatsList sets={sets} currentSet={currentSet} />
 		</main>
 	)
 }

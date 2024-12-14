@@ -3,6 +3,7 @@ import KegelsButton from '../Components/KegelsButton'
 import { H1 } from '../Components/Text'
 import RepCount from '../Components/RepCount'
 import Warning from '../Components/Warning'
+import ScrollBtn from '../Components/ScrollBtn';
 
 function ButtonContainer(props) {
 	const [holdMessageVisible, setHoldMessageVisible] = useState(false);
@@ -50,6 +51,7 @@ function ButtonContainer(props) {
 				isPressed={props.isPressed}
 				breathStage={props.breathStage}
 			/>
+			<ScrollBtn className={`${props.isSetFinished ? ' block ' : ' hidden '}`} />
 			<RepCount
 				eraceCount={props.eraceCount}
 				setIsSetStarted={props.setIsSetStarted}

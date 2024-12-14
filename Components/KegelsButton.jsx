@@ -74,7 +74,7 @@ function KegelsButton(props) {
           </Countdown>
         </span>
       </button>
-      <H1 className="absolute top-[calc(100%+8px)] left-0">
+      <H1 className=" absolute top-[calc(100%+8px)] text-center w-full ">
         {props.isPressed
           ? props.pressDuration >= 5
             ? props.breathStage

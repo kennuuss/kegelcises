@@ -14,9 +14,12 @@ function ButtonContainer(props) {
         pressDuration={props.pressDuration}
         restDuration={props.restDuration}
         isResting={props.isResting}
+        isSetStarted={props.isSetStarted}
         isSetFinished={props.isSetFinished}
         currentCount={props.currentCount}
         eraceCount={props.eraceCount}
+        isPressed={props.isPressed}
+        breathStage={props.breathStage}
       />
       
 

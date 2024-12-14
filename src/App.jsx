@@ -119,10 +119,10 @@ function App() {
 			if (pressDuration >= 5) {
 				counter++
 				if (stage === 'Inhale' && counter === 4) {
-					setBreathStage('Hold')
-					stage = 'Hold'
+					setBreathStage('Hold your breath')
+					stage = 'Hold your breath'
 					counter = 0
-				} else if (stage === 'Hold' && counter === 2) {
+				} else if (stage === 'Hold your breath' && counter === 2) {
 					setBreathStage('Exhale')
 					stage = 'Exhale'
 					counter = 0

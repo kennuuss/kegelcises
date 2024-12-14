@@ -20,7 +20,7 @@ function ButtonContainer(props) {
 	}, [props.isPressed, props.pressDuration]);
 	
 	return (
-		<div className='h-screen flex justify-between py-32 lg:py-0 flex-col items-center'>
+		<div className='h-screen flex justify-between lg:justify-center lg:pb-28 py-32 lg:py-0 flex-col items-center'>
 			<H1 className="text-center h-[168px] flex items-center">
       {props.isPressed
         ? props.pressDuration >= 5

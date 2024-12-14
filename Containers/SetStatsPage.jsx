@@ -21,7 +21,7 @@ function SetStatsPage({ set }) {
 	]
 
 	return (
-		<div className='h-screen w-screen flex flex-col items-center '>
+		<div ref={set.ref} className='h-screen w-screen flex flex-col items-center justify-center '>
 			<H1 className=' mt-[72px] mb-[72px] '>{set.id} set</H1>
 			<div className='flex lg:gap-[82px] items-center'>
 				<div className='flex flex-col lg:w-[30vw] gap-[48px]'>

@@ -11,6 +11,3 @@ function Countdown({ restDuration, pressDuration, children }) {
 }
 
 export default Countdown
-/* pressDuration > 0 || restDuration >= 1
-	? 'text-[58px] mx-auto select-none dark:text-white pointer-events-none'
-	: 'opacity-0 text-[58px] mx-auto select-none pointer-events-none' */

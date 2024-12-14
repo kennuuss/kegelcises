@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import SetStatsPage from '../Containers/SetStatsPage'
 import ButtonContainer from '../Containers/ButtonContainer'
 
@@ -17,9 +17,10 @@ function App() {
 	const [timerId, setTimerId] = useState(null)
 	const [intervalId, setIntervalId] = useState(null)
 	const [currentSet, setCurrentSet] = useState(1)
-	const [currentSetId, setCurrentSetId] = useState(0)
+	const [currentSetId, setCurrentSetId] = useState(null)
+	const [whichRef, setWhichRef] = useState(1)
 
-	const sets = [
+	const [sets, setSets] = useState([
 		{
 			id: 1,
 			setDuration: '0:46',
@@ -41,27 +42,7 @@ function App() {
 				{ id: 14, repType: 'Rest', repDuration: '0' },
 			],
 		},
-		{
-			id: 2,
-			setDuration: '0:46',
-			reps: [
-				{ id: 0, repType: 'Hold', repDuration: '0:12' },
-				{ id: 1, repType: 'Rest', repDuration: '0:24' },
-				{ id: 2, repType: 'Tap', repDuration: '0' },
-				{ id: 3, repType: 'Tap', repDuration: '0' },
-				{ id: 4, repType: 'Tap', repDuration: '0' },
-				{ id: 5, repType: 'Hold', repDuration: '0' },
-				{ id: 6, repType: 'Rest', repDuration: '0' },
-				{ id: 7, repType: 'Hold', repDuration: '0' },
-				{ id: 8, repType: 'Rest', repDuration: '0' },
-				{ id: 9, repType: 'Tap', repDuration: '0' },
-				{ id: 10, repType: 'Tap', repDuration: '0' },
-				{ id: 11, repType: 'Tap', repDuration: '0' },
-				{ id: 12, repType: 'Hold', repDuration: '0' },
-				{ id: 13, repType: 'Rest', repDuration: '0' },
-			],
-		},
-	]
+	])
 
 	useEffect(() => {
 		const startSetTimer = () => {
@@ -82,6 +63,12 @@ function App() {
 		setRestDuration(0)
 		setIsSetStarted(true)
 		setIsSetFinished(false)
+
+		if (restId) {
+			clearInterval(restId)
+			setRestId(null)
+			setRestDuration(0)
+		}
 	}
 
 	//!мышь
@@ -209,34 +196,54 @@ function App() {
 		setIsPressed(false)
 		setPressDuration(0)
 
+		// Проверка на завершение текущего подхода
 		if (currentCount <= 14) {
 			setCount((prev) => prev + 1)
 		}
 
 		if (currentCount === 14) {
 			setIsSetFinished(true)
-			setCurrentSet(currentSet + 1)
-			sets.push({
+			setCurrentSet((prev) => prev + 1)
+
+			// Создание нового сета
+			const newSet = {
 				id: currentSet,
-				setDuration: currentSetId,
+				setDuration: formatTime(currentSetId || 0),
 				reps: [],
-			})
+			}
+
+			setSets((prevSets) => [...prevSets, newSet])
 			setIsSetStarted(false)
 		}
 
-		const newRepInfo = {
-			id: sets.reps.length + 1,
-			repType: isResting ? 'Rest' : pressDuration >= 5 ? 'Hold' : 'Tap',
-			repDuration: isResting
-				? formatTime(restId)
-				: pressDuration >= 5
-				? formatTime(pressDuration)
-				: '',
+		// Проверка существования текущего сета
+		setSets((prevSets) => {
+			const updatedSets = [...prevSets]
+			const currentSetIndex = currentSet - 1
+
+			if (updatedSets[currentSetIndex]) {
+				const newRepInfo = {
+					id: updatedSets[currentSetIndex].reps.length + 1,
+					repType: isResting ? 'Rest' : pressDuration >= 5 ? 'Hold' : 'Tap',
+					repDuration: isResting
+						? formatTime(restDuration)
+						: pressDuration >= 5
+						? formatTime(pressDuration)
+						: '',
+				}
+
+				updatedSets[currentSetIndex].reps = [
+					...updatedSets[currentSetIndex].reps,
+					newRepInfo,
+				]
+			}
+
+			return updatedSets
+		})
+
+		if (currentCount === 13) {
+			setIsWarningShowing(true)
 		}
-
-		sets[currentSet].reps.push(newRepInfo)
-
-		currentCount === 13 && setIsWarningShowing(true)
 	}
 
 	useEffect(() => {
@@ -270,7 +277,7 @@ function App() {
 			/>
 			{sets[currentSet - 1].reps.length === 15 &&
 				sets.map((set) => {
-					return <SetStatsPage set={set} key={set.id} />
+					return <SetStatsPage ref={set.ref} set={set} key={set.id} />
 				})}
 		</main>
 	)

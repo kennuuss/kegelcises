@@ -3,13 +3,13 @@ import * as SVG from '../src/SVGs'
 
 function RepCount(props) {
 	return (
-		<div className='flex opacity-60 h-[64px] lg:flex-row flex-col items-center lg:gap-0 gap-4 lg:absolute lg:bottom-2 lg:right-4'>
+		<div className='flex h-[64px] lg:flex-row flex-col items-center lg:gap-0 gap-4 lg:absolute lg:bottom-2 lg:right-4'>
 			<button
-				className={`w-[64px] active:scale-125 hover:scale-110 transition-all duration-150 h-[64px] dark:text-[#B5B5B5] text-[#7C7C7C] flex justify-center items-center ${props.currentCount === 15 && ' hidden '}   ${
-					props.currentCount <= 1 && ' pointer-events-none opacity-30 '
+				className={`w-[64px] active:scale-125 hover:scale-110 transition-all duration-150 h-[64px] dark:text-[#B5B5B5] text-[#7C7C7C] flex justify-center items-center   ${
+					props.currentCount <= 1 || props.currentCount === 15 ? ' pointer-events-none opacity-30 ' : ' '
 				}`}
-				onClick={props.eraceCount}
-				onTouchStart={props.eraceCount}
+				onClick={!props.isSetFinished && props.eraceCount}
+				onTouchStart={!props.isSetFinished && props.eraceCount}
 			>
 				{SVG.SVGTrashBin}
 			</button>

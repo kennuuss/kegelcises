@@ -1,13 +1,13 @@
 import React from 'react'
 
 export function P({ className, children }) {
-	return <p className={`text-[24px] dark:text-white ${className}`}>{children}</p>
+	return <p className={`font-poppins text-[24px] dark:text-white ${className}`}>{children}</p>
 }
 
 export function H1(props) {
 	return (
 		<h1
-			className={`text-[56px] font-normal select-none text-center dark:text-white h-min ${
+			className={`font-poppins text-[56px] font-normal select-none  dark:text-white h-min ${
 				props.className
 			} ${props.children === 'pass' && ' opacity-0 pointer-events-none '}`}
 		>
@@ -19,7 +19,7 @@ export function H1(props) {
 export function H2(props) {
 	return (
 		<h2
-			className={`text-[36px] text-white font-bold select-none text-center  h-min ${
+			className={`font-poppins text-[36px] text-white font-bold select-none   h-min ${
 				props.className
 			} ${props.children === 'pass' && ' opacity-0 pointer-events-none '}`}
 		>

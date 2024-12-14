@@ -47,7 +47,7 @@ function KegelsButton(props) {
 				}}
 				className={`${
 					props.isResting && 'relative pointer-events-none cursor-not-allowed '
-				} w-[350px] h-[350px] flex hover:scale-105 transition-all duration-150 lg:active:scale-110 justify-center items-center `}
+				} w-[350px] h-[350px] flex lg:hover:scale-105 transition-all duration-150 lg:active:scale-110 justify-center items-center `}
 			>
 				<span
 					className={`transform flex justify-center items-center transition-all duration-150 rounded-full w-[244px] h-[244px] ${
